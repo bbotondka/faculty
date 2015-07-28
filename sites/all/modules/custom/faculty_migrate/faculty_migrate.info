@@ -4,5 +4,7 @@ core = 7.x
 package = Faculty
 version = 7.x-1.0
 dependencies[] = faculty_general
+dependencies[] = migrate_extras_profile2
 features[features_api][] = api:2
+files[] = faculty_migrate.migrate.inc
 project path = sites/all/modules/custom
