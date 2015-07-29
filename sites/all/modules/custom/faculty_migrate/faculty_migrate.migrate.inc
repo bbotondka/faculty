@@ -90,43 +90,87 @@ class MigrateFacultyUserMigration extends Migration {
 	}
 
 	public function prepareRow($row) {
-		/*
 		// Always include this fragment at the beginning of every prepareRow()
 		// implementation, so parent classes can ignore rows.
 		if (parent::prepareRow($row) === FALSE) {
 			return FALSE;
 		}
 
-		$related_data = $this->getRelatedData($row->id);
-		// If marked as spam in the related data, skip this row
-		if ($related_data->spam) {
-			return FALSE;
-		}
-
-		// Add the related data of interest
-		$row->foo = $related_data->foo;
-		$row->bar = $related_data->bar;
-		*/
-
 		// Get professor id from current row.
 		$current_professor_id = $row->profid;
 
 		// Check if related user exists.
-		// Create new profile2 in next step.
 		if (empty($row->migrate_map_destid1)) {
-			$row->new_user = 'success test';
+			// Now we try to create user.
+			$new_user = $this->faculty_migrate_create_user();
 
-			// Now we create user.
-			var_dump(array('new just before' => $row));
+			if (empty($new_user)) {
+				// Skip this row because creation of user failed.
+				return FALSE;
+			}
+
+			// We save existing user id related to current profile2.
+			$row->related_user_id = $new_user->uid;
+		}
+		elseif($profile_object = profile2_load($row->migrate_map_destid1)) {
+			// Here user potentially exists.
+
+			// @Todo: Update existing user field (not profile2 field).
+			//$existing_user_object = user_load($profile_object->uid);
+
+			// We save existing user id related to current profile2.
+			$row->related_user_id = $profile_object->uid;
 		}
 
 		// Pass this row.
 		return TRUE;
 	}
 
-	public function prepare($entity, stdClass $row) {
-		var_dump(array('new just after' => $row));
+	private function faculty_migrate_create_user() {
+		//This will generate a random password, you could set your own here
+		$password = user_password(8);
+
+		// @Todo: pass name, mail and other variables in param of this function.
+
+		//set up the user fields
+		$fields = array(
+			'name' => 'user_name',
+			'mail' => 'user_name@example.com',
+			'pass' => $password,
+			'status' => 1,
+			'init' => 'email address',
+			'roles' => array(
+				DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+			),
+		);
+
+		//the first parameter is left blank so a new user is created
+		$account = user_save('', $fields);
+
+		if (empty($account)) {
+			// user_save() fail.
+			// Exit from function.
+			return FALSE;
+		}
+
+		// If you want to send the welcome email, use the following code
+
+		// Manually set the password so it appears in the e-mail.
+		$account->password = $fields['pass'];
+
+		// Send the e-mail through the user module.
+		//drupal_mail('user', 'register_no_approval_required', $email, NULL, array('account' => $account), variable_get('site_mail', 'noreply@example..com'));
+
+		return $account;
 	}
 
-	public function complete($entity, stdClass $row) {}
+	public function prepare($profile2, stdClass $row) {
+		var_dump(array('new just after' => $row));
+
+		if (!empty($row->related_user_id)) {
+			$profile2->uid = $row->related_user_id;
+		}
+	}
+
+	public function complete($profile2, stdClass $row) {}
 }
