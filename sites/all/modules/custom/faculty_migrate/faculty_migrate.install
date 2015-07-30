@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_disable().
+ *
+ * Use this command: "drush migrate-deregister --orphans"
+ */
+/*function faculty_migrate_disable() {
+	// Deregister old migration class.
+	Migration::deregisterMigration('MigrateFacultyUser');
+	// Deregister current migration class.
+	Migration::deregisterMigration('MigrateFacultyProfessor');
+	Migration::deregisterMigration('MigrateFacultyProfessorDetail');
+}*/
