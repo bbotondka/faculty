@@ -1,20 +1,26 @@
 [
   {
-    "profid":"24924"
+    "profid":"24924",
+    "degree":"DEGREE"
   },
   {
-    "profid":"24863"
+    "profid":"24863",
+    "degree":"degree2"
   },
   {
-    "profid":"248638"
+    "profid":"248638",
+    "degree":"new"
   },
   {
-    "profid":"248640"
+    "profid":"248640",
+    "degree":"degree4"
   },
   {
-    "profid":"200"
+    "profid":"200",
+    "degree":"newusertest2"
   },
   {
-    "profid":"100"
+    "profid":"100",
+    "degree":"degree 100"
   }
 ]

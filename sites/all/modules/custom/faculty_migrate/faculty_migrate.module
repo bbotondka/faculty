@@ -3,3 +3,6 @@
  * @file
  * Drupal needs this blank file.
  */
+
+define('FACULTY_MIGRATE_USER_SOURCE_ID', 'profid');
+
