@@ -5,4 +5,8 @@
  */
 
 define('FACULTY_MIGRATE_USER_SOURCE_ID', 'profid');
+// Prevent error with drush migrate commands when import users and contents.
+define('FACULTY_MIGRATE_BASE_URL', 'http://faculty.dev');
 
+define('FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME', 'professor');
+define('FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME', 'professor_detail');
