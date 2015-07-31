@@ -48,10 +48,14 @@ function faculty_migrate_user_load_by_professor_id($professor_id, $profile_type)
  *
  * @throws Exception
  */
-function faculty_migrate_create_user($name, $mail, $professor_id, $profile_type = FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME) {
+function faculty_migrate_create_user($name, $mail, $professor_id) {
 
-	// We search if external prof id match with existing user.
-	if ($account = faculty_migrate_user_load_by_professor_id($professor_id, $profile_type)) {
+	// We search if external prof id match with existing
+	// user profile 'professor'.
+	// Caution: we don't use 'professor_detail' profile here because
+	// 'professor' is a first class which potentially create user/
+	// See dependency in faculty_migrate_migrate_api().
+	if ($account = faculty_migrate_user_load_by_professor_id($professor_id, FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME)) {
 		// Log error.
 		watchdog('faculty_migrate', 'User already exists with same professor_id: %professor_id. See faculty_migrate_create_user()', array(
 			'%professor_id' => $professor_id,
@@ -134,44 +138,33 @@ function faculty_migrate_get_base_url() {
 }
 
 /**
- *
+ * Custom prepare row with user creation.
  *
  * @param $row
+ *   Current row (each professor)
  *
  * @return bool
+ *   TRUE: pass and FALSE: Skip this row.
  */
-function faculty_migrate_user_profile_custom_prepare_row($row, $profile_type) {
-	$base_url = faculty_migrate_get_base_url();
-
-	// Get professor id from current row.
-	$current_professor_id = $row->profid;
+function faculty_migrate_user_profile_custom_prepare_row($row) {
+	// @Todo: Write this exception case:
+	// @Todo: Check if existing profil exists for current user
+	// @Todo: but destination_id doesn't exists in table of mapping.
 
 	// Check if related user exists.
 	if (empty($row->migrate_map_destid1)) {
 		// Potentially user isn't already created.
 
-		// @Todo: get this variables from current row.
-		$name = 'user_name';
-		$mail = 'florian.lebrenn@gmail.com';
+		// @Todo: check format of data before insert.
 
-		// Set $return_account value.
-		// if TRUE, we return account to save existing user id related
-		// to current profile2.
-		// Caution: Duplicate profile2 by user if $return_account = TRUE.
-		/*switch($profile_type) {
-			case FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME:
-				$return_account = FALSE;
-				break;
-			case FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME:
-				$return_account = TRUE;
-				break;
-			default:
-				$return_account = FALSE;
-		}*/
+		// Get professor id from current row.
+		$current_professor_id = $row->profid;
+		// Get username from current row.
+		$name = $row->name;
+		// Get mail from current row.
+		$mail = $row->mail;
 
 		// Now we try to create user.
-		// Caution by default this function has got a fourth param to
-		// manage profile type dependency.
 		$new_user = faculty_migrate_create_user($name, $mail, $current_professor_id);
 
 		if (empty($new_user)) {

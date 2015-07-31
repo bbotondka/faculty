@@ -1,26 +1,32 @@
 [
   {
-    "profid":"24924",
-    "degree":"DEGREE after update"
+    "profid":"2",
+    "name":"name_without_space_2",
+    "mail":"florian.lebrenn+fac2@gmail.com",
+    "degree":"Degree 2"
   },
   {
-    "profid":"24863",
-    "degree":"degree2"
+    "profid":"5",
+    "name":"name_without_space_5",
+    "mail":"florian.lebrenn+fac5@gmail.com",
+    "degree":"Degree 5"
   },
   {
-    "profid":"248638",
-    "degree":"new"
+    "profid":"3",
+    "name":"name_without_space_3",
+    "mail":"florian.lebrenn+fac3@gmail.com",
+    "degree":"Degree 3"
   },
   {
-    "profid":"248640",
-    "degree":"degree4"
+    "profid":"1",
+    "name":"name_without_space_1",
+    "mail":"florian.lebrenn+fac1@gmail.com",
+    "degree":"Degree 1"
   },
   {
-    "profid":"200",
-    "degree":"newusertest2"
-  },
-  {
-    "profid":"100",
-    "degree":"degree 100"
+    "profid":"4",
+    "name":"name_without_space_4",
+    "mail":"florian.lebrenn+fac4@gmail.com",
+    "degree":"Degree 4"
   }
 ]

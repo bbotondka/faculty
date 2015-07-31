@@ -29,20 +29,21 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 			MigrateDestinationProfile2::getKeySchema()
 		);
 
+		// Get base url.
 		$base_url = faculty_migrate_get_base_url();
-
+		// Path to json files.
 		$faculty_migrate_path = drupal_get_path('module', 'faculty_migrate');
 		$list_url = $base_url . '/' . $faculty_migrate_path . '/data/profs.json';
 		$item_url = $base_url . '/' . $faculty_migrate_path . '/data/prof_:id.json';
 
-		// Second parameter is the unique ID from the source file.
+		// Define source of migration.
 		$this->source = new MigrateSourceList(
 			new MigrateListJSON($list_url),
 			new MigrateItemJSON($item_url, array()),
 			$this->fields_from_json()
 		);
 
-		// Call profile2_get_types() to get the list.
+		// Destination of migration: profile2 entity type.
 		$this->destination = new MigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME);
 
 		// Destination - Source mapping.
@@ -77,7 +78,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 
 		// Custom prepare row.
 		// Try to create user in this function.
-		return faculty_migrate_user_profile_custom_prepare_row($row, FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME);
+		return faculty_migrate_user_profile_custom_prepare_row($row);
 	}
 
 	public function prepare($profile2, stdClass $row) {
