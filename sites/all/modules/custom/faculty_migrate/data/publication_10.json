@@ -1,0 +1,17 @@
+{
+  "type": "case_study",
+  "authors": [
+    {
+      "authorid": "3",
+      "name": "Florianlebrenn3"
+    },
+    {
+      "authorid": "2",
+      "name": "Florianlebrenn2"
+    },
+    {
+      "authorid": "",
+      "name": "Withoutid from 10 test1"
+    }
+  ]
+}
