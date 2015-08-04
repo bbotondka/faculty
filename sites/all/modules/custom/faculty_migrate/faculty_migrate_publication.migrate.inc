@@ -38,7 +38,7 @@ class MigrateFacultyPublicationMigration extends Migration {
 		$this->source = new MigrateSourceJSON($source_url, FACULTY_MIGRATE_PUBLICATION_SOURCE_ID, $this->fields_from_json());
 
 		// Destination of migration: eck/publication entity type.
-		$this->destination = new MigrateDestinationEntityAPI('publication', 'publication');
+		$this->destination = new MigrateDestinationEntityAPI('publication', 'undefined_type');
 
 		// Destination - Source mapping.
 		// Save original id from json file to retrieve publication.
@@ -56,7 +56,7 @@ class MigrateFacultyPublicationMigration extends Migration {
 	public function fields_from_json() {
 		return array(
 			FACULTY_MIGRATE_PUBLICATION_SOURCE_ID => 'Unique ID for each source data row',
-			'title' => 'Title of publication from source data',
+			'type' => 'bundle type json file'
 		);
 	}
 
@@ -74,9 +74,17 @@ class MigrateFacultyPublicationMigration extends Migration {
 
 	public function prepare($eck_publication_entity, stdClass $row) {
 
-		// Set title from source.
-		if (!empty($row->title)) {
-			$eck_publication_entity->title = $row->title;
+		// Switch type (bundle).
+		if (!empty($row->type)) {
+			$eck_publication_entity->type = $row->type;
+		}
+
+		// Add property infos in eck_publication table.
+		if (!empty($row->publicationid)) {
+			// Set publicationid.
+			$eck_publication_entity->publicationid = intval($row->publicationid);
+			// Set title.
+			$eck_publication_entity->title = t('publication detail') . ' ' . $row->publicationid;
 		}
 
 	}

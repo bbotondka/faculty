@@ -292,3 +292,33 @@ function faculty_migrate_json_decoder($json,$assoc = false,$depth = 512,$options
 
 	return $decode_result;
 }
+
+/**
+ * Execute request to get eck/publication allowed list.
+ *
+ * @param $bundle
+ *   Specific bundle of eck/publication entity.
+ *
+ * @return array
+ */
+function faculty_migrate_get_allowed_publication($bundle) {
+	$allowed_publication = array();
+
+	$query = db_select('eck_publication', 'eckp');
+
+	$query->condition('type', $bundle);
+	$query->fields('eckp',array('id', 'publicationid'));
+
+	$result = $query->execute();
+
+	// For each record.
+	while($record = $result->fetchAssoc()) {
+		// Entity id in key.
+		$eck_publication_id = $record['publicationid'];
+
+		// Add record to $allowed_publication array.
+		$allowed_publication[$eck_publication_id] = $record['publicationid'];
+	}
+
+	return $allowed_publication;
+}

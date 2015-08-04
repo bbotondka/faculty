@@ -35,8 +35,8 @@ function faculty_migrate_migrate_api() {
 				'class_name' => 'MigrateFacultyPublicationMigration',
 				'group_name' => 'faculty',
 			),
-			'FacultyPublicationDetail' => array(
-				'class_name' => 'MigrateFacultyPublicationDetailMigration',
+			'FacultyPublicationBookDetail' => array(
+				'class_name' => 'MigrateFacultyPublicationBookDetailMigration',
 				'group_name' => 'faculty',
 				'dependencies' => array(
 					'FacultyPublication',

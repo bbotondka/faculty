@@ -10,6 +10,6 @@ files[] = faculty_migrate_global_functions.inc
 files[] = faculty_migrate_professor.migrate.inc
 files[] = faculty_migrate_professor_detail.migrate.inc
 files[] = faculty_migrate_publication.migrate.inc
-files[] = faculty_migrate_publication_detail.migrate.inc
+files[] = faculty_migrate_publication_book_detail.migrate.inc
 files[] = faculty_migrate.migrate.inc
 project path = sites/all/modules/custom

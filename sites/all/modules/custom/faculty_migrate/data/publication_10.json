@@ -1,5 +1,6 @@
 {
-  "type": "case_study",
+  "case": "Test case study 10",
+  "title":"Publication 10",
   "authors": [
     {
       "authorid": "3",
