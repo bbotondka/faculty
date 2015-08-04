@@ -313,11 +313,11 @@ function faculty_migrate_get_allowed_publication($bundle) {
 
 	// For each record.
 	while($record = $result->fetchAssoc()) {
-		// Entity id in key.
-		$eck_publication_id = $record['publicationid'];
+		// Publicationid (from json) in key.
+		$publicationid = $record['publicationid'];
 
 		// Add record to $allowed_publication array.
-		$allowed_publication[$eck_publication_id] = $record['publicationid'];
+		$allowed_publication[$publicationid] = $record['id'];
 	}
 
 	return $allowed_publication;

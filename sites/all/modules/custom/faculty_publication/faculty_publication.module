@@ -3,3 +3,19 @@
  * @file
  * Drupal needs this blank file.
  */
+
+/**
+ * Implements hook_entity_view().
+ */
+function faculty_publication_entity_view($entity, $type, $view_mode, $langcode) {
+
+	// Add publicationid (from property table).
+	if ($type == 'publication') {
+		$entity->content['publication_id'] = array(
+			'#markup' => t('Publication id from json: ') . $entity->publicationid,
+			'#weight' => 10,
+			//'#theme' => 'mymodule_my_additional_field',
+		);
+	}
+
+}
