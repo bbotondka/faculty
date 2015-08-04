@@ -84,7 +84,7 @@ gulp.task('browser-sync', function(){
     ];
 
     return browserSync.init(files, {
-        proxy: "http://faculty.dev:8888", //change this to whatever your local development URL is.
+        proxy: "http://faculty.dev", //change this to whatever your local development URL is.
         open: false,
         injectChanges: true
     });

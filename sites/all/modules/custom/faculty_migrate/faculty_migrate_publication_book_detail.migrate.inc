@@ -94,7 +94,8 @@ class MigrateFacultyPublicationBookDetailMigration extends Migration {
 			return FALSE;
 		}
 
-		return TRUE;
+		// Node publication custom prepare row.
+		return faculty_migrate_node_publication_prepare_row($row);
 	}
 
 	public function prepare($node_book, stdClass $row) {
@@ -124,9 +125,11 @@ class MigrateFacultyPublicationBookDetailMigration extends Migration {
 	public function complete($node_book, stdClass $row) {
 
 		// Set eck_publication reference (populate field_publication_ref).
-		$node_book_wrapper = entity_metadata_wrapper('node', $node_book);
-		$node_book_wrapper->field_publication_ref->set(intval($this->eck_publication_allowed[$row->publicationid]));
-		$node_book_wrapper->save();
+		faculty_migrate_set_eck_publication_reference($node_book, $row, $this->eck_publication_allowed);
+
+		// Set authors (external & internal).
+		faculty_migrate_set_authors($node_book, $row);
+
 	}
 
 }

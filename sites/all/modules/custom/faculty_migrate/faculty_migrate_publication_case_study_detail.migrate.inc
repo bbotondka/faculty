@@ -94,7 +94,8 @@ class MigrateFacultyPublicationCaseStudyDetailMigration extends Migration {
 			return FALSE;
 		}
 
-		return TRUE;
+		// Node publication custom prepare row.
+		return faculty_migrate_node_publication_prepare_row($row);
 	}
 
 	public function prepare($node_case_study, stdClass $row) {
@@ -122,10 +123,12 @@ class MigrateFacultyPublicationCaseStudyDetailMigration extends Migration {
 	}
 
 	public function complete($node_case_study, stdClass $row) {
+
 		// Set eck_publication reference (populate field_publication_ref).
-		$node_case_study_wrapper = entity_metadata_wrapper('node', $node_case_study);
-		$node_case_study_wrapper->field_publication_ref->set(intval($this->eck_publication_allowed[$row->publicationid]));
-		$node_case_study_wrapper->save();
+		faculty_migrate_set_eck_publication_reference($node_case_study, $row, $this->eck_publication_allowed);
+
+		// Set authors (external & internal).
+		faculty_migrate_set_authors($node_case_study, $row);
 	}
 
 }
