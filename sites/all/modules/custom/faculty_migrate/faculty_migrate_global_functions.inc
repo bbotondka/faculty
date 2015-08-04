@@ -322,3 +322,104 @@ function faculty_migrate_get_allowed_publication($bundle) {
 
 	return $allowed_publication;
 }
+
+/**
+ * Set eck_publication reference (populate field_publication_ref).
+ */
+function faculty_migrate_set_eck_publication_reference($node, $row, $eck_publication_allowed) {
+	$node_book_wrapper = entity_metadata_wrapper('node', $node);
+
+	if (!empty($node_book_wrapper->field_publication_ref)) {
+		$node_book_wrapper->field_publication_ref->set(intval($eck_publication_allowed[$row->publicationid]));
+		$node_book_wrapper->save();
+	}
+
+}
+
+/**
+ * Set authors (internal and external).
+ *
+ * @param $node
+ * @param $row
+ *
+ * @return bool
+ */
+function faculty_migrate_set_authors($node, $row) {
+
+	$internal_authors = array();
+	$external_authors = array();
+
+	$node_book_wrapper = entity_metadata_wrapper('node', $node);
+
+	// For each author.
+	foreach($row->authors as $author) {
+
+		// External author.
+		if (empty($author->authorid)) {
+
+			// Check author name.
+			if (empty($author->name)) {
+
+				// Log error.
+				watchdog('faculty_migrate', 'No name and author id: <pre>@row</pre> <pre>@node</pre>.', array(
+					'@node' => print_r($node, TRUE),
+					'@row' => print_r($row, TRUE),
+				), WATCHDOG_ERROR);
+
+				// Next author.
+				continue;
+			}
+
+			// Add external author to the list.
+			$external_authors[] = $author->name;
+
+		}
+		elseif ($user_loaded = faculty_migrate_user_load_by_professor_id($author->authorid, FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME)) {
+			// Internal user.
+			// Try to load user.
+
+			$internal_authors[] = $user_loaded;
+		}
+
+	}
+
+	// Set field_authors.
+	if (!empty($node_book_wrapper->field_authors)) {
+		$node_book_wrapper->field_authors->set($internal_authors);
+		$node_book_wrapper->save();
+	}
+
+	// Set field_external_authors.
+	if (!empty($node_book_wrapper->field_external_authors)) {
+		$node_book_wrapper->field_external_authors->set($external_authors);
+		$node_book_wrapper->save();
+	}
+
+	return TRUE;
+
+}
+
+/**
+ * Node publication custom prepare row.
+ *
+ * @param $row
+ *   Row from json file.
+ *
+ * @return bool
+ *   TRUE: pass - FALSE: next row.
+ */
+function faculty_migrate_node_publication_prepare_row($row) {
+
+	// Check if row author exists.
+	if (empty($row->authors)) {
+		// Log error.
+		watchdog('faculty_migrate', 'Related authors do not referenced: <pre>@row</pre>.', array(
+			'@row' => print_r( $row, TRUE),
+		), WATCHDOG_ERROR);
+
+		return FALSE;
+	}
+
+	// Default result.
+	return TRUE;
+}
