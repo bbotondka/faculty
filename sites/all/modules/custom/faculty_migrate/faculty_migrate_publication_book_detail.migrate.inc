@@ -8,13 +8,19 @@ include_once('faculty_migrate_global_functions.inc');
  *
  * Second version of migration class.
  */
-class MigrateFacultyPublicationDetailMigration extends Migration {
+class MigrateFacultyPublicationBookDetailMigration extends Migration {
+
+	// Array of allowed publication
+	// key: eck_publication_id - value: publicationid from json.
+	protected $eck_publication_allowed;
 
 	public function __construct($arguments) {
 		// Call parent constructor.
 		parent::__construct($arguments);
 		// Add description of the current class.
 		$this->description = t('Import publication detail from json file');
+		// Set default value of $eck_publication_allowed.
+		$this->eck_publication_allowed = array();
 
 		// Define unique ID from source used to match content
 		// with drupal entities (eck/publication).
@@ -26,7 +32,7 @@ class MigrateFacultyPublicationDetailMigration extends Migration {
 					'not null' => TRUE,
 				)
 			),
-			MigrateDestinationEntityAPI::getKeySchema('publication')
+			MigrateDestinationNode::getKeySchema()
 		);
 
 		// Get base url.
@@ -43,14 +49,14 @@ class MigrateFacultyPublicationDetailMigration extends Migration {
 			$this->fields_from_json()
 		);
 
-		// Destination of migration: eck/publication entity type.
-		$this->destination = new MigrateDestinationEntityAPI('publication', 'undefined_type');
+		// Destination of migration: node book.
+		$this->destination = new MigrateDestinationNode(FACULTY_MIGRATE_NODE_BOOK_MACHINE_NAME);
 
 		// Destination - Source mapping.
-		// Save original id from json file to retrieve user related to this profile.
-		//$this->addFieldMapping('field_publication_id', FACULTY_MIGRATE_USER_SOURCE_ID);
 		$this->addFieldMapping('uid')
 		     ->defaultValue(1);
+
+		$this->addFieldMapping('field_book', 'book');
 
 	}
 
@@ -61,9 +67,18 @@ class MigrateFacultyPublicationDetailMigration extends Migration {
 	 */
 	public function fields_from_json() {
 		return array(
-			FACULTY_MIGRATE_USER_SOURCE_ID => 'Unique ID for each source data row',
-			'type' => 'bundle type json file'
+			FACULTY_MIGRATE_PUBLICATION_SOURCE_ID => 'Unique ID for each source data row',
+			'title' => 'Title of current row'
 		);
+	}
+
+	public function preImport() {
+		parent::preImport();
+		// Code to execute before first article row is imported.
+
+		// Execute request to get eck/publication list
+		// Specific bundle in param.
+		$this->eck_publication_allowed = faculty_migrate_get_allowed_publication(FACULTY_MIGRATE_NODE_BOOK_MACHINE_NAME);
 	}
 
 	public function prepareRow($row) {
@@ -73,23 +88,33 @@ class MigrateFacultyPublicationDetailMigration extends Migration {
 			return FALSE;
 		}
 
-		// Custom prepare row.
-		// Try to create user in this function.
-		//return faculty_migrate_user_profile_custom_prepare_row($row);
+		if(!in_array($row->publicationid, $this->eck_publication_allowed)) {
+			return FALSE;
+		}
 	}
 
 	public function prepare($eck_publication_entity, stdClass $row) {
 
-		// Switch type (bundle).
-		if (!empty($row->type)) {
-			$eck_publication_entity->type = $row->type;
+		// Set title from source.
+		if (!empty($row->title)) {
+			$eck_publication_entity->title = $row->title;
 		}
 
-		// Set title.
-		if (!empty($row->publicationid)) {
-			$eck_publication_entity->title = t('publication detail') . ' ' . $row->publicationid;
-		}
+	}
 
+	public function postImport() {
+		parent::postImport();
+		// Code to execute after the last article row has been imported
+	}
+
+	public function preRollback() {
+		parent::preRollback();
+		// Code to execute before first article row is deleted
+	}
+
+	public function postRollback() {
+		parent::postRollback();
+		// Code to execute after the last article row has been deleted
 	}
 
 	public function complete($profile2, stdClass $row) {}

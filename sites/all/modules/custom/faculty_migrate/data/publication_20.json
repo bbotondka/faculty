@@ -1,5 +1,6 @@
 {
-  "type": "book",
+  "book": "Test book 20",
+  "title":"Publication 20",
   "authors": [
     {
       "authorid": "",
