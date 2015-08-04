@@ -42,6 +42,13 @@ function faculty_migrate_migrate_api() {
 					'FacultyPublication',
 				),
 			),
+			'FacultyPublicationCaseStudyDetail' => array(
+				'class_name' => 'MigrateFacultyPublicationCaseStudyDetailMigration',
+				'group_name' => 'faculty',
+				'dependencies' => array(
+					'FacultyPublication',
+				),
+			),
 		),
 	);
 	return $api;

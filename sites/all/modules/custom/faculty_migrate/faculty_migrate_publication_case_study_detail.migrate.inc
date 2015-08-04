@@ -8,7 +8,7 @@ include_once('faculty_migrate_global_functions.inc');
  *
  * Second version of migration class.
  */
-class MigrateFacultyPublicationBookDetailMigration extends Migration {
+class MigrateFacultyPublicationCaseStudyDetailMigration extends Migration {
 
 	// Array of allowed publication
 	// key: eck_publication_id - value: publicationid from json.
@@ -49,14 +49,14 @@ class MigrateFacultyPublicationBookDetailMigration extends Migration {
 			$this->fields_from_json()
 		);
 
-		// Destination of migration: node book.
-		$this->destination = new MigrateDestinationNode(FACULTY_MIGRATE_NODE_BOOK_MACHINE_NAME);
+		// Destination of migration: node case_study.
+		$this->destination = new MigrateDestinationNode(FACULTY_MIGRATE_NODE_CASE_STUDY_MACHINE_NAME);
 
 		// Destination - Source mapping.
 		$this->addFieldMapping('uid')
 		     ->defaultValue(1);
 
-		$this->addFieldMapping('field_book', 'book');
+		$this->addFieldMapping('field_case_study', 'case');
 
 	}
 
@@ -78,7 +78,7 @@ class MigrateFacultyPublicationBookDetailMigration extends Migration {
 
 		// Execute request to get eck/publication list
 		// Specific bundle in param.
-		$this->eck_publication_allowed = faculty_migrate_get_allowed_publication(FACULTY_MIGRATE_NODE_BOOK_MACHINE_NAME);
+		$this->eck_publication_allowed = faculty_migrate_get_allowed_publication(FACULTY_MIGRATE_NODE_CASE_STUDY_MACHINE_NAME);
 	}
 
 	public function prepareRow($row) {
@@ -97,11 +97,11 @@ class MigrateFacultyPublicationBookDetailMigration extends Migration {
 		return TRUE;
 	}
 
-	public function prepare($node_book, stdClass $row) {
+	public function prepare($node_case_study, stdClass $row) {
 
 		// Set title from source.
 		if (!empty($row->title)) {
-			$node_book->title = $row->title;
+			$node_case_study->title = $row->title;
 		}
 
 	}
@@ -121,12 +121,11 @@ class MigrateFacultyPublicationBookDetailMigration extends Migration {
 		// Code to execute after the last article row has been deleted
 	}
 
-	public function complete($node_book, stdClass $row) {
-
+	public function complete($node_case_study, stdClass $row) {
 		// Set eck_publication reference (populate field_publication_ref).
-		$node_book_wrapper = entity_metadata_wrapper('node', $node_book);
-		$node_book_wrapper->field_publication_ref->set(intval($this->eck_publication_allowed[$row->publicationid]));
-		$node_book_wrapper->save();
+		$node_case_study_wrapper = entity_metadata_wrapper('node', $node_case_study);
+		$node_case_study_wrapper->field_publication_ref->set(intval($this->eck_publication_allowed[$row->publicationid]));
+		$node_case_study_wrapper->save();
 	}
 
 }

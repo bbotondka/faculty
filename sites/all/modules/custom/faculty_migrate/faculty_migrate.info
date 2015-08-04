@@ -11,5 +11,6 @@ files[] = faculty_migrate_professor.migrate.inc
 files[] = faculty_migrate_professor_detail.migrate.inc
 files[] = faculty_migrate_publication.migrate.inc
 files[] = faculty_migrate_publication_book_detail.migrate.inc
+files[] = faculty_migrate_publication_case_study_detail.migrate.inc
 files[] = faculty_migrate.migrate.inc
 project path = sites/all/modules/custom

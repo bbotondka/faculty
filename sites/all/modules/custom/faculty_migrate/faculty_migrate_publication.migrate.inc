@@ -67,9 +67,7 @@ class MigrateFacultyPublicationMigration extends Migration {
 			return FALSE;
 		}
 
-		// Custom prepare row.
-		// Try to create user in this function.
-		//return faculty_migrate_user_profile_custom_prepare_row($row);
+		return TRUE;
 	}
 
 	public function prepare($eck_publication_entity, stdClass $row) {
