@@ -31,6 +31,13 @@ function faculty_migrate_migrate_api() {
 					'FacultyProfessor',
 				),
 			),
+			'FacultyProfessorImage' => array(
+				'class_name' => 'MigrateFacultyProfessorImageMigration',
+				'group_name' => 'faculty',
+				'dependencies' => array(
+					'FacultyProfessor',
+				),
+			),
 			'FacultyPublication' => array(
 				'class_name' => 'MigrateFacultyPublicationMigration',
 				'group_name' => 'faculty',
