@@ -2,14 +2,14 @@
 
 
 /**
- * Load user by professor_id (field in profile2).
+ * Load user or profile2 by professor_id (field in profile2).
  *
  * @param $professor_id
  *   External user id.
  *
  * @return bool|mixed
  */
-function faculty_migrate_user_load_by_professor_id($professor_id, $profile_type) {
+function faculty_migrate_user_load_by_professor_id($professor_id, $profile_type, $return_profile2 = FALSE) {
 	$query = new EntityFieldQuery();
 	$query->entityCondition('entity_type', 'profile2')
 	      ->entityCondition('bundle', $profile_type)
@@ -21,6 +21,16 @@ function faculty_migrate_user_load_by_professor_id($professor_id, $profile_type)
 		$profile2_id = reset(array_keys($result['profile2']));
 		$profile2_loaded = entity_load_single('profile2', $profile2_id);
 
+		if (empty($profile2_loaded)) {
+			return FALSE;
+		}
+
+		// Return profile2 object.
+		if ($return_profile2) {
+			return $profile2_loaded;
+		}
+
+		// Return user object.
 		return user_load($profile2_loaded->uid);
 	}
 
@@ -459,6 +469,44 @@ function faculty_migrate_attach_image_to_related_user($image, $row) {
 	$user_loaded->picture = $image;
 
 	$user_wrapper = entity_metadata_wrapper('user', $user_loaded);
+	$user_wrapper->save();
+
+	return TRUE;
+}
+
+/**
+ * Try to attach current cv to related profile2.
+ *
+ * @param $image
+ * @param $row
+ */
+function faculty_migrate_attach_cv_to_related_profile2($cv, $row) {
+
+	// Skip if image hasn't fid.
+	if (empty($cv->fid)) {
+		return FALSE;
+	}
+
+	// Skip empty destination_file in row.
+	if (empty($row->destination_file)) {
+		return FALSE;
+	}
+
+	// Skip if external id not find.
+	if (!$external_user_id = faculty_migrate_extract_id_from_filename($row->destination_file)) {
+		return FALSE;
+	}
+
+	// Skip if profile2 (bundle professor_detail) not loaded.
+	if (!$profile2_loaded = faculty_migrate_user_load_by_professor_id($external_user_id, FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME, TRUE)) {
+		return FALSE;
+	}
+
+	// We can attach cv now.
+
+	$user_wrapper = entity_metadata_wrapper('profile2', $profile2_loaded);
+	$user_wrapper->field_cv->file->set($cv);
+
 	$user_wrapper->save();
 
 	return TRUE;
