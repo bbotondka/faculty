@@ -6,7 +6,7 @@ include_once('faculty_migrate_global_functions.inc');
 /**
  * Migration for files.
  */
-class MigrateFacultyProfessorImageMigration extends Migration {
+class MigrateFacultyProfessorCvMigration extends Migration {
 
 	protected $baseDir;
 
@@ -32,11 +32,8 @@ class MigrateFacultyProfessorImageMigration extends Migration {
 		);
 
 		// Edit to include the desired extensions.
-		$allowed = 'jpg jpeg gif png';
-		if (module_exists('file_entity')) {
-			$allowed = variable_get('file_entity_default_allowed_extensions', $allowed);
-		}
-		$file_mask = '/^photo_[0-9]*\.(' . str_replace(array(',', ' '), '|', $allowed) . ')$/i';
+		$allowed = 'pdf';
+		$file_mask = '/^cv_[0-9]*\.(' . str_replace(array(',', ' '), '|', $allowed) . ')$/i';
 		$list = new MigrateListFiles($directories, $this->baseDir, $file_mask);
 		// Send FALSE as second argument to prevent loading of file data, which we
 		// don't need.
@@ -66,10 +63,10 @@ class MigrateFacultyProfessorImageMigration extends Migration {
 		$row->destination_file = substr($row->sourceid, 1);
 	}
 
-	public function complete($image, stdClass $row) {
+	public function complete($cv, stdClass $row) {
 
-		// Try to attach current image to related user.
-		faculty_migrate_attach_image_to_related_user($image, $row);
+		// Try to attach current cv to related profile2.
+		faculty_migrate_attach_cv_to_related_profile2($cv, $row);
 
 	}
 
