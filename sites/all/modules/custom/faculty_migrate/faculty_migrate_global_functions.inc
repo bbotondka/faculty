@@ -423,3 +423,70 @@ function faculty_migrate_node_publication_prepare_row($row) {
 	// Default result.
 	return TRUE;
 }
+
+/**
+ * Try to attach current image to related user.
+ *
+ * @param $image
+ * @param $row
+ */
+function faculty_migrate_attach_image_to_related_user($image, $row) {
+
+	// Skip if image hasn't fid.
+	if (empty($image->fid)) {
+		return FALSE;
+	}
+
+	// Skip empty destination_file in row.
+	if (empty($row->destination_file)) {
+		return FALSE;
+	}
+
+	// Skip if external id not find.
+	if (!$external_user_id = faculty_migrate_extract_id_from_filename($row->destination_file)) {
+		return FALSE;
+	}
+
+	// Skip if user not loaded.
+	if (!$user_loaded = faculty_migrate_user_load_by_professor_id($external_user_id, FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME)) {
+		return FALSE;
+	}
+
+	// We can attach image now.
+
+	// Error with entity_metadata_wrapper 'picture' property.
+	// See https://www.drupal.org/node/2224645#comment-10161102.
+	$user_loaded->picture = $image;
+
+	$user_wrapper = entity_metadata_wrapper('user', $user_loaded);
+	$user_wrapper->save();
+
+	return TRUE;
+}
+
+/**
+ * Extract id from filename.
+ *
+ * @param $filename
+ *   Name of file.
+ *
+ * @return bool|mixed
+ *   Return an id or FALSE.
+ */
+function faculty_migrate_extract_id_from_filename($filename) {
+	// Remove extension if exists.
+	$temp = explode('.', $filename);
+	$ext = array_pop( $temp );
+	$filename = implode('.', $temp);
+
+	// Extract id at the end of file.
+	$temp = explode('_', $filename);
+	$id = end($temp);
+
+	if (is_numeric($id)) {
+		return $id;
+	}
+
+	// Default result.
+	return FALSE;
+}

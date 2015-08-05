@@ -82,7 +82,6 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 	}
 
 	public function prepare($profile2, stdClass $row) {
-		var_dump(array('new just after' => $row));
 
 		if (!empty($row->related_user_id)) {
 			$profile2->uid = $row->related_user_id;
