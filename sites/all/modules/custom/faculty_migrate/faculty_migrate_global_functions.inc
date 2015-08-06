@@ -394,13 +394,15 @@ function faculty_migrate_set_authors($node, $row) {
 	}
 
 	// Set field_authors.
-	if (!empty($node_book_wrapper->field_authors)) {
+	if ((!empty($internal_authors))
+     && (!empty($node_book_wrapper->field_authors))) {
 		$node_book_wrapper->field_authors->set($internal_authors);
 		$node_book_wrapper->save();
 	}
 
 	// Set field_external_authors.
-	if (!empty($node_book_wrapper->field_external_authors)) {
+	if ((!empty($external_authors))
+     && (!empty($node_book_wrapper->field_external_authors))) {
 		$node_book_wrapper->field_external_authors->set($external_authors);
 		$node_book_wrapper->save();
 	}

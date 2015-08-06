@@ -13,7 +13,7 @@ stylesheets[all][0] = build/css/style.css
 ; Scripts
 ; ========================================
 
-scripts[1] = build/scripts/main.js
+scripts[1] = build/scripts/js/main.js
 
 ; ========================================
 ; Regions
