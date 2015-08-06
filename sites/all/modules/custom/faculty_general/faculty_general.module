@@ -3,3 +3,30 @@
  * @file
  * Drupal needs this blank file.
  */
+
+/**
+ * Implements hook_menu().
+ */
+function faculty_general_menu() {
+	$menu['admin/config/faculty'] =  array(  // this is the block that contain another configuration links
+		'title' => t('FACULTY') ,
+		'description' => t('Faculty settings') ,
+		'weight' => -8,
+		'page callback' => 'system_admin_menu_block_page',  // we should implement this function in system.admin.inc file
+		'access arguments' => array('access administration pages'),
+		'file' => 'system.admin.inc',     // don't forget to add the file and path
+		'file path' => drupal_get_path('module', 'system'),
+		'position' => 'right',
+	);
+
+	$menu['admin/config/faculty/footer'] = array( // this is an example of configuration link
+		'title' => t('Footer blocks') ,
+		'description' => t('Footer admin page') ,
+		'page callback' => 'faculty_general_admin_footer' ,
+		'file' => 'faculty_general.admin.inc',
+		'type' => MENU_NORMAL_ITEM,
+		'access arguments' => array('administer site configuration') ,
+	);
+
+	return $menu;
+}
