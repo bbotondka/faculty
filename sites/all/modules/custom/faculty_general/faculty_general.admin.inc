@@ -9,13 +9,17 @@
 function _faculty_general_admin_footer() {
 	$form = array();
 
+	// To resolve conflicts with images (save) and system_settings_form().
+	// we use suffix _fid.
+	// See https://www.drupal.org/node/1090198.
+
 	// Logo mobile.
 	$form['logo_mobile'] = array(
 		'#weight' => -50,
 		'#type' => 'managed_file',
 		'#title' => t('Logo mobile'),
 		'#description' => t('Allowed extensions: gif png jpg jpeg'),
-		'#default_value' => variable_get('logo_mobile', ''),
+		'#default_value' => variable_get('logo_mobile_fid', ''),
 		'#upload_location' => 'public://images',
 		'#upload_validators' => array(
 			'file_validate_extensions' => array('gif png jpg jpeg'),
@@ -25,7 +29,7 @@ function _faculty_general_admin_footer() {
 	);
 
 	// If there is already an uploaded image display the image here.
-	if ($image_fid = variable_get('logo_mobile', FALSE)) {
+	if ($image_fid = variable_get('logo_mobile_fid', FALSE)) {
 		$image_load = file_load($image_fid);
 		$form['logo_mobile_thumbnail'] = array(
 			'#weight' => -40,
@@ -43,7 +47,7 @@ function _faculty_general_admin_footer() {
 		'#type' => 'managed_file',
 		'#title' => t('Logo desktop'),
 		'#description' => t('Allowed extensions: gif png jpg jpeg'),
-		'#default_value' => variable_get('logo_desktop', ''),
+		'#default_value' => variable_get('logo_desktop_fid', ''),
 		'#upload_location' => 'public://images',
 		'#upload_validators' => array(
 			'file_validate_extensions' => array('gif png jpg jpeg'),
@@ -53,7 +57,7 @@ function _faculty_general_admin_footer() {
 	);
 
 	// If there is already an uploaded image display the image here.
-	if ($image_fid = variable_get('logo_desktop', FALSE)) {
+	if ($image_fid = variable_get('logo_desktop_fid', FALSE)) {
 		$image_load = file_load($image_fid);
 		$form['logo_logo_desktop_thumbnail'] = array(
 			'#weight' => -20,
@@ -132,6 +136,10 @@ function _faculty_general_url_validate($element, &$form_state, $form) {
 /**
  * Save images permanently.
  *
+ * To resolve conflicts with images (save) and system_settings_form().
+ * we use suffix _fid.
+ * See https://www.drupal.org/node/1090198.
+ *
  * @param $form
  * @param $form_state
  */
@@ -143,8 +151,16 @@ function _faculty_general_save_file_permanently($form, &$form_state) {
 	);
 	global $user;
 
+	// unset managed_file submit buttons
+	foreach ($form_state['buttons'] as $ind => $button) {
+		if (isset($button['#submit']) && $button['#submit'][0] == 'file_managed_file_submit') {
+			unset($form_state['buttons'][$ind]);
+		}
+	}
+
 	// For each field image to save.
 	foreach ($fields_image as $field_img) {
+
 		// When using the #managed_file form element the file is automatically
 		// uploaded an saved to the {file} table. The value of the corresponding
 		// form element is set to the {file}.fid of the new file.
@@ -163,17 +179,20 @@ function _faculty_general_save_file_permanently($form, &$form_state) {
 			file_usage_add($file, 'faculty_migrate', 'sample_image', $user->uid);
 
 			// Save the fid of the file so that the module can reference it later.
-			variable_set($field_img, $file->fid);
+			variable_set($field_img . '_fid', $file->fid);
 			drupal_set_message(t('The image @image_name was uploaded and saved with an ID of @fid and will be displayed.', array(
 				'@image_name' => $file->filename,
 				'@fid' => $file->fid
 			)));
+
+			// Make sure it is unset before system submit to prevent conflicts.
+			unset($form_state['values'][$field_img]);
 		}
 		// If the file was removed we need to remove the module's reference to the
 		// removed file's fid, and remove the file.
 		elseif ($form_state['values'][$field_img] == 0) {
 			// Retrieve the old file's id.
-			$fid = variable_get($field_img, FALSE);
+			$fid = variable_get($field_img . '_fid', FALSE);
 			$file = $fid ? file_load($fid) : FALSE;
 			if ($file) {
 				// When a module is managing a file, it must manage the usage count.
@@ -183,18 +202,18 @@ function _faculty_general_save_file_permanently($form, &$form_state) {
 				// The file_delete() function takes a file object and checks to see if
 				// the file is being used by any other modules. If it is the delete
 				// operation is cancelled, otherwise the file is deleted.
-				file_delete($file);
+				file_delete($file, TRUE);
 			}
 
 			// Either way the module needs to update it's reference since even if the
 			// file is in use by another module and not deleted we no longer want to
 			// use it.
-			variable_set($field_img, FALSE);
+			variable_del($field_img . '_fid', FALSE);
 			if (!empty($file->filename)) {
 				drupal_set_message(t('The image @image_name was removed.', array('@image_name' => $file->filename)));
 			}
 		}
 
-	}
+	} // End foreach field img.
 
 }
