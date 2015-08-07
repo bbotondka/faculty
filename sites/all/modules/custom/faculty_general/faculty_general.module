@@ -22,11 +22,37 @@ function faculty_general_menu() {
 	$menu['admin/config/faculty/footer'] = array( // this is an example of configuration link
 		'title' => t('Footer blocks') ,
 		'description' => t('Footer admin page') ,
-		'page callback' => 'faculty_general_admin_footer' ,
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('_faculty_general_admin_footer'),
 		'file' => 'faculty_general.admin.inc',
 		'type' => MENU_NORMAL_ITEM,
 		'access arguments' => array('administer site configuration') ,
 	);
 
 	return $menu;
+}
+
+/**
+ * Get enabled languages objects.
+ *
+ * @return array
+ */
+function _faculty_general_get_enabled_languages() {
+	$enabled_languages = array();
+	$languages_enabled = language_list('enabled');
+
+	if ((!empty($languages_enabled))
+     && (!empty($languages_enabled[1]))
+	) {
+		foreach($languages_enabled[1] as $langcode => $language) {
+			// User underscore for langcode.
+			$langcode = str_replace('-', '_', $langcode);
+			// Lowercase for langcode.
+			$langcode = strtolower($langcode);
+
+			$enabled_languages[$langcode] = $language;
+		}
+	}
+
+	return $enabled_languages;
 }
