@@ -84,11 +84,11 @@ function _faculty_general_admin_footer() {
 			'#collapsed' => TRUE,
 		);
 
-			// One fieldset by block.
+			// Virtual visit fieldset.
 			$form[$langcode]['virtual_visit'] = array(
 				'#type' => 'fieldset',
 				'#title' => t('Virtual visit'),
-				'#weight' => -5,
+				'#weight' => -50,
 				'#collapsible' => TRUE,
 				'#collapsed' => TRUE,
 			);
@@ -107,6 +107,67 @@ function _faculty_general_admin_footer() {
 					'#default_value' => variable_get('virtual_visit_link_' . $langcode, ''),
 					'#element_validate' => array('_faculty_general_url_validate'),
 				);
+
+			// Address fieldset.
+			$form[$langcode]['address'] = array(
+				'#type' => 'fieldset',
+				'#title' => t('Address'),
+				'#weight' => -30,
+				'#collapsible' => TRUE,
+				'#collapsed' => TRUE,
+			);
+
+				// Address title.
+				$form[$langcode]['address']['address_title_' . $langcode] = array(
+					'#type' => 'textfield',
+					'#title' => t('Address title'),
+					'#default_value' => variable_get('address_title_' . $langcode, ''),
+				);
+
+				// Address textarea.
+				$form[$langcode]['address']['address_textarea_' . $langcode] = array(
+					'#type' => 'textarea',
+					'#title' => t('Address textarea'),
+					'#default_value' => variable_get('address_textarea_' . $langcode, ''),
+				);
+
+				// Address label.
+				$form[$langcode]['address']['address_label_' . $langcode] = array(
+					'#type' => 'textfield',
+					'#title' => t('Address link label'),
+					'#default_value' => variable_get('address_label_' . $langcode, ''),
+				);
+
+				// Address link.
+				$form[$langcode]['address']['address_link_' . $langcode] = array(
+					'#type' => 'textfield',
+					'#title' => t('Address link url'),
+					'#default_value' => variable_get('address_link_' . $langcode, ''),
+					'#element_validate' => array('_faculty_general_url_validate'),
+				);
+
+			// Contact fieldset.
+			$form[$langcode]['contact'] = array(
+				'#type' => 'fieldset',
+				'#title' => t('Contact'),
+				'#weight' => -10,
+				'#collapsible' => TRUE,
+				'#collapsed' => TRUE,
+			);
+
+			// Contact title.
+			$form[$langcode]['contact']['contact_title_' . $langcode] = array(
+				'#type' => 'textfield',
+				'#title' => t('Contact title'),
+				'#default_value' => variable_get('contact_title_' . $langcode, ''),
+			);
+	
+			// Contact textarea.
+			$form[$langcode]['contact']['contact_textarea_' . $langcode] = array(
+				'#type' => 'textarea',
+				'#title' => t('Contact textarea'),
+				'#default_value' => variable_get('contact_textarea_' . $langcode, ''),
+			);
 
 	} // End foreach - fieldset by language.
 
