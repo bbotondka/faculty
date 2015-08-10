@@ -84,6 +84,13 @@ function _faculty_general_admin_footer() {
 			'#collapsed' => TRUE,
 		);
 
+			// Copyright.
+			$form[$langcode]['copyright_' . $langcode] = array(
+				'#type' => 'textfield',
+				'#title' => t('Copyright'),
+				'#default_value' => variable_get('copyright_' . $langcode, ''),
+			);
+
 			// Virtual visit fieldset.
 			$form[$langcode]['virtual_visit'] = array(
 				'#type' => 'fieldset',
