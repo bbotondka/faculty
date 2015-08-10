@@ -38,7 +38,29 @@
 				<?php if ($tabs): ?><div class="tabs"><?php print render($tabs); ?></div><?php endif; ?>
 				<?php print render($page['help']); ?>
 				<?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
+
+				<?php if ($page['top_content']): ?>
+					<?php print render($page['top_content']); ?>
+				<?php endif; ?>
+
 				<?php print render($page['content']); ?>
+
+				<?php if ($page['middle_grey_content']): ?>
+					<?php print render($page['middle_grey_content']); ?>
+				<?php endif; ?>
+
+				<?php if ($page['middle_white_content']): ?>
+					<?php print render($page['middle_white_content']); ?>
+				<?php endif; ?>
+
+				<?php if ($page['bottom_grey_content']): ?>
+					<?php print render($page['bottom_grey_content']); ?>
+				<?php endif; ?>
+
+				<?php if ($page['bottom_white_content']): ?>
+					<?php print render($page['bottom_white_content']); ?>
+				<?php endif; ?>
+
 				<?php //print $feed_icons; ?>
 			</div>
 
@@ -57,7 +79,20 @@
 		</section> <!-- /#main -->
 
 		<footer>
+
+			<?php if ($page['top_footer']): ?>
+				<?php print render($page['top_footer']); ?>
+			<?php endif; ?>
+
 			<?php print render($page['footer']); ?>
+
+			<?php if ($page['bottom_footer']): ?>
+				<?php print render($page['bottom_footer']); ?>
+			<?php endif; ?>
+
+			<?php if ($page['mention']): ?>
+				<?php print render($page['mention']); ?>
+			<?php endif; ?>
 		</footer>
 
 	</div> <!-- /#container -->

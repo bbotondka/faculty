@@ -19,16 +19,24 @@ scripts[1] = build/scripts/js/main.js
 ; Regions
 ; ========================================
 
+;regions[page_top] = Page top
+;regions[page_bottom] = Page bottom
 regions[header] = Header
 regions[help] = Help
-regions[page_top] = Page top
-regions[page_bottom] = Page bottom
 regions[highlighted] = Highlighted
 regions[featured] = Featured
-regions[content] = Content
+regions[top_content] = Top content
+regions[content] = Main content
+regions[middle_grey_content] = Middle grey content
+regions[middle_white_content] = Middle white content
+regions[bottom_grey_content] = Bottom grey content
+regions[bottom_white_content] = Bottom white content
 regions[sidebar_first] = Sidebar first
 regions[sidebar_second] = Sidebar second
+regions[top_footer] = Top footer
 regions[footer] = Footer
+regions[bottom_footer] = Bottom footer
+regions[mention] = Mention
 
 ; ========================================
 ; Settings
