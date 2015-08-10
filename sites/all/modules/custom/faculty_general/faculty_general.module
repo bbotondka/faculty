@@ -4,6 +4,8 @@
  * Drupal needs this blank file.
  */
 
+define('FACULTY_GENERAL_DEFAULT_LANGCODE', 'fr');
+
 /**
  * Implements hook_menu().
  */
@@ -33,6 +35,143 @@ function faculty_general_menu() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function faculty_general_theme() {
+	$template_path = drupal_get_path('module', 'faculty_general') . '/templates';
+
+	return array(
+		'faculty_general_get_image_style_url_from_theme_or_module' => array(
+			'variables' => array(
+				'style_name' => NULL,
+				// File path with or without filename.
+				// No end slash.
+				'path' => NULL,
+				'filename' => NULL
+				//'width' => NULL,
+				//'height' => NULL
+			),
+		),
+		'faculty_general_footer_virtual' => array(
+			'variables' => array(),
+			'template' => 'faculty-general-footer-virtual',
+			'path' => $template_path,
+		),
+		'faculty_general_footer_address' => array(
+			'variables' => array(),
+			'template' => 'faculty-general-footer-address',
+			'path' => $template_path,
+		),
+		'faculty_general_footer_contact' => array(
+			'variables' => array(),
+			'template' => 'faculty-general-footer-contact',
+			'path' => $template_path,
+		),
+		'faculty_general_footer_copyright' => array(
+			'variables' => array(),
+			'template' => 'faculty-general-footer-copyright',
+			'path' => $template_path,
+		),
+	);
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function faculty_general_block_info() {
+	$block = array();
+
+	// Virtual visit block.
+	$block['faculty_general_footer_virtual'] = array(
+		'info' => t('Footer - Virtual visit'),
+		'status' => TRUE,
+		'region' => 'footer'
+	);
+
+	// Address block.
+	$block['faculty_general_footer_address'] = array(
+		'info' => t('Footer - Address'),
+		'status' => TRUE,
+		'region' => 'footer'
+	);
+
+	// Contact block.
+	$block['faculty_general_footer_contact'] = array(
+		'info' => t('Footer - Contact'),
+		'status' => TRUE,
+		'region' => 'footer'
+	);
+
+	// Copyright block.
+	$block['faculty_general_footer_copyright'] = array(
+		'info' => t('Footer - Copyright'),
+		'status' => TRUE,
+		'region' => 'footer'
+	);
+
+	return $block;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function faculty_general_block_view($delta = '') {
+	$block = array();
+
+	// Get current language.
+	$current_langcode = _faculty_general_get_current_language();
+
+	switch ($delta) {
+		case 'faculty_general_footer_virtual':
+
+			// Get desktop image from footer blocks config page.
+			if ($image_fid = variable_get('logo_desktop_fid', FALSE)) {
+				$image_load = file_load($image_fid);
+				$logo_img = theme('image_style', array(
+					'path' => $image_load->uri,
+					'style_name' => 'thumbnail'
+				));
+			}
+
+			// Virtual visit
+			if (($virtual_visit_label = variable_get('virtual_visit_label_' . $current_langcode, FALSE))
+			 && ($virtual_visit_url = variable_get('virtual_visit_link_' . $current_langcode, FALSE))
+			) {
+				$virtual_visit_link = l($virtual_visit_label, $virtual_visit_url);
+			}
+
+			$block['content'] = theme('faculty_general_footer_virtual', array(
+				'logo_img' => (!empty($logo_img)) ? $logo_img : '',
+				'virtual_visit_link' => (!empty($virtual_visit_link)) ? $virtual_visit_link : '',
+			));
+			break;
+
+		case 'faculty_general_footer_address':
+			$block['content'] = theme('faculty_general_footer_address', array(
+				'title' => '',
+				'address' => '',
+				'address_link' => ''
+			));
+			break;
+
+		case 'faculty_general_footer_contact':
+			$block['content'] = theme('faculty_general_footer_contact', array(
+				'title' => '',
+				'contact' => ''
+			));
+			break;
+
+		case 'faculty_general_footer_copyright':
+			$block['content'] = theme('faculty_general_footer_copyright', array(
+				'copyright' => ''
+			));
+			break;
+	}
+
+	return $block;
+}
+
+/**
  * Get enabled languages objects.
  *
  * @return array
@@ -55,4 +194,107 @@ function _faculty_general_get_enabled_languages() {
 	}
 
 	return $enabled_languages;
+}
+
+/**
+ * Get current language (formatted langcode).
+ *
+ * @return string
+ *   Return langcode.
+ */
+function _faculty_general_get_current_language() {
+	global $language;
+
+	if (empty($language->language)) {
+		// Default langcode.
+		return FACULTY_GENERAL_DEFAULT_LANGCODE;
+	}
+
+	// User underscore for langcode.
+	$langcode = str_replace('-', '_', $language->language);
+	// Lowercase for langcode.
+	$langcode = strtolower($langcode);
+
+	return $langcode;
+}
+
+/**
+ * Helper function to get image_url from image_path
+ *
+ * @param $image_style
+ *   Image style.
+ * @param $image_path
+ *   Image path.
+ *
+ * @return bool|string
+ *   Return image_url.
+ */
+function _faculty_get_image_url($image_style, $image_path = 'no_image_path') {
+	$variables = array(
+		'style_name' => $image_style,
+		'path' => $image_path,
+		'filename' => drupal_basename($image_path)
+	);
+
+	if (!file_exists($image_path)) {
+		// Default icon.
+		$variables['path'] = drupal_get_path('theme', 'faculty');
+		$variables['filename'] = 'logo.jpg';
+	}
+
+	return theme_faculty_general_get_image_style_url_from_theme_or_module($variables);
+}
+
+/**
+ * Returns HTML for an image using a specific image style.
+ *
+ * Clones theme_image_style() with the additional step of forcing the creation
+ * of the derivative to bypass any 404 issues.
+ *
+ * Example of $variables in param.
+ * $variables = array(
+ *    'style_name' => 'thumbnail',
+ *    'path' => drupal_get_path('theme', 'faculty') . '/assets/img',
+ *    'filename' => 'bg-header.jpg',
+ *    'absolute' => TRUE
+ * );
+ */
+function theme_faculty_general_get_image_style_url_from_theme_or_module($variables) {
+	$path_is_absolute = (!empty($variables['absolute'])) ? $variables['absolute'] : FALSE;
+
+	$header_img_path = $variables['path'];
+
+	// End of path contains filename.
+	$pattern_filename = '/' . $variables['filename'] . '$/';
+	$search_filename_result = preg_match($pattern_filename, $variables['path']);
+	// Pattern: Start with public schema.
+	$pattern_public_schema = '/^public:\/\//';
+	$search_public_schema_result = preg_match($pattern_public_schema, $variables['path']);
+	// Path from theme or module directory.
+	if (empty($search_filename_result)) {
+		// Add filename at the end og $header_img_path.
+		$header_img_path .= '/' . $variables['filename'];
+	}
+	elseif (empty($search_public_schema_result)) {
+		// Path from public schema.
+		$header_img_path = 'public://' . $header_img_path;
+	}
+
+	$image_style_dest_path = image_style_path($variables['style_name'], $variables['filename']);
+	if (!file_exists($image_style_dest_path)) {
+		// Get style detail.
+		$style = image_style_load($variables['style_name']);
+		// Create derivative image.
+		image_style_create_derivative($style, $header_img_path, $image_style_dest_path);
+	}
+
+	if ($path_is_absolute) {
+		$image_url = file_create_url($image_style_dest_path);
+	}
+	else {
+		$wrapper = file_stream_wrapper_get_instance_by_scheme(file_uri_scheme($image_style_dest_path));
+		$image_url = '/' . $wrapper->getDirectoryPath() . '/' . file_uri_target($image_style_dest_path);
+	}
+
+	return file_create_url($image_url);
 }
