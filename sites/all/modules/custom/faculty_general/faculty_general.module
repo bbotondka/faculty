@@ -85,28 +85,24 @@ function faculty_general_block_info() {
 	$block['faculty_general_footer_virtual'] = array(
 		'info' => t('Footer - Virtual visit'),
 		'status' => TRUE,
-		'region' => 'footer'
 	);
 
 	// Address block.
 	$block['faculty_general_footer_address'] = array(
 		'info' => t('Footer - Address'),
 		'status' => TRUE,
-		'region' => 'footer'
 	);
 
 	// Contact block.
 	$block['faculty_general_footer_contact'] = array(
 		'info' => t('Footer - Contact'),
 		'status' => TRUE,
-		'region' => 'footer'
 	);
 
 	// Copyright block.
 	$block['faculty_general_footer_copyright'] = array(
 		'info' => t('Footer - Copyright'),
 		'status' => TRUE,
-		'region' => 'footer'
 	);
 
 	return $block;
@@ -133,7 +129,7 @@ function faculty_general_block_view($delta = '') {
 				));
 			}
 
-			// Virtual visit
+			// Get Virtual visit link.
 			if (($virtual_visit_label = variable_get('virtual_visit_label_' . $current_langcode, FALSE))
 			 && ($virtual_visit_url = variable_get('virtual_visit_link_' . $current_langcode, FALSE))
 			) {
@@ -147,23 +143,31 @@ function faculty_general_block_view($delta = '') {
 			break;
 
 		case 'faculty_general_footer_address':
+
+			// Get Address link.
+			if (($address_label = variable_get('address_label_' . $current_langcode, FALSE))
+			    && ($address_url = variable_get('address_link_' . $current_langcode, FALSE))
+			) {
+				$address_link = l($address_label, $address_url);
+			}
+
 			$block['content'] = theme('faculty_general_footer_address', array(
-				'title' => '',
-				'address' => '',
-				'address_link' => ''
+				'title' => variable_get('address_title_' . $current_langcode, ''),
+				'address' => nl2br(variable_get('address_textarea_' . $current_langcode, '')),
+				'address_link' => (!empty($address_link)) ? $address_link : '',
 			));
 			break;
 
 		case 'faculty_general_footer_contact':
 			$block['content'] = theme('faculty_general_footer_contact', array(
-				'title' => '',
-				'contact' => ''
+				'title' => variable_get('contact_title_' . $current_langcode, ''),
+				'contact' => nl2br(variable_get('contact_textarea_' . $current_langcode, '')),
 			));
 			break;
 
 		case 'faculty_general_footer_copyright':
 			$block['content'] = theme('faculty_general_footer_copyright', array(
-				'copyright' => ''
+				'copyright' => variable_get('copyright_' . $current_langcode, '')
 			));
 			break;
 	}

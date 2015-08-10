@@ -1,1 +1,1 @@
-Copyright
+<?php echo $copyright; ?>
