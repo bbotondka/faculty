@@ -5,6 +5,10 @@
 				<a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><?php print $site_name; ?></a>
 			<?php endif; ?>
 
+			<?php if ($site_slogan): ?>
+				<?php print $site_slogan; ?>
+			<?php endif; ?>
+
 			<?php if ($main_menu): ?>
 				<nav>
 					<?php print theme('links__system_main_menu', array(

@@ -2,15 +2,25 @@
 
 	<?php
 		// @Todo: Create custom template to render header of page.
-	?>
-	<div style="background-image: url('<?php print render($content['field_image']); ?>');">
-		<?php print render($title_prefix); ?>
-		<?php if (!$page): ?>
-			<h1<?php print $title_attributes; ?>><?php print $title; ?></h1>
-		<?php endif; ?>
 
-		<?php print render($title_suffix); ?>
-	</div>
+	?>
+
+	<?php
+	/**
+	 * Render faculty_top_image_content.
+	 */
+	print theme('faculty_top_image_content', array(
+		// Get image url (mobile or desktop version).
+		'field_image_url' => render($content['field_image']),
+		'field_mobile_image_url' => render($content['field_mobile_image']),
+		'title_prefix' => render($title_prefix),
+		'title_attributes' => $title_attributes,
+		'title' => $title,
+		'title_suffix' => render($title_suffix),
+		'page' => $page,
+		'node' => $node
+	));
+	?>
 
 	<?php print $user_picture; ?>
 
@@ -26,6 +36,7 @@
 		hide($content['comments']);
 		hide($content['links']);
 		hide($content['field_image']);
+		hide($content['field_mobile_image']);
 		print render($content);
 		?>
 	</div>
