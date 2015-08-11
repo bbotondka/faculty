@@ -302,3 +302,60 @@ function theme_faculty_general_get_image_style_url_from_theme_or_module($variabl
 
 	return file_create_url($image_url);
 }
+
+/**
+ * Mobile device detection.
+ *
+ * CAUTION: we exclude tablet device from mobile device group.
+ *
+ * @return bool
+ *   Is mobile ? TRUE or FALSE.
+ */
+function _faculty_general_is_mobile() {
+	// Get browser info.
+	$browser = browscap_get_browser();
+
+	// Empty browser.
+	if (empty($browser)) {
+		return FALSE;
+	}
+
+	// Exclude tablet device from mobile device group.
+	if ($browser['istablet'] === 'true') {
+		return FALSE;
+	}
+
+	// Is mobile device.
+	if ($browser['ismobiledevice'] === 'true') {
+		return TRUE;
+	}
+
+	// Default result.
+	return FALSE;
+}
+
+/**
+ * Tablet device detection.
+ *
+ * CAUTION: Tablet device is a mobile device.
+ *
+ * @return bool
+ *   Is tablet ? TRUE or FALSE.
+ */
+function _faculty_general_is_tablet() {
+	// Get browser info.
+	$browser = browscap_get_browser();
+
+	// Empty browser.
+	if (empty($browser)) {
+		return FALSE;
+	}
+
+	// Is tablet device.
+	if ($browser['istablet'] === 'true') {
+		return TRUE;
+	}
+
+	// Default result.
+	return FALSE;
+}

@@ -28,6 +28,21 @@ function faculty_css_alter(&$css) {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function faculty_theme() {
+	$template_path = drupal_get_path('theme', 'faculty') . '/templates';
+
+	return array(
+		'faculty_top_image_content' => array(
+			'variables' => array(),
+			'template' => 'faculty-top-image-content',
+			'path' => $template_path,
+		)
+	);
+}
+
+/**
  * Implements hook_preprocess_node.
  *
  * Add theme hook suggestion
@@ -50,6 +65,43 @@ function faculty_preprocess_node(&$vars) {
  */
 function faculty_field__field_image__page($variables) {
 	return _faculty_sanitize_image_url_when_rendering($variables);
+}
+
+/**
+ * Implements theme_field().
+ *
+ * Sanitize field_image of node page type.
+ * We render image url without div and space
+ * to use background-image css property.
+ *
+ * See https://api.drupal.org/api/drupal/modules!field!field.module/function/theme_field/7.
+ */
+function faculty_field__field_mobile_image__page($variables) {
+	return _faculty_sanitize_image_url_when_rendering($variables);
+}
+
+/**
+ * Implements theme_links().
+ *
+ * Alter language switcher block.
+ * See https://www.drupal.org/node/1369090.
+ *
+ * @param $vars
+ *
+ * @return string
+ */
+function faculty_links__locale_block(&$vars) {
+	foreach($vars['links'] as $language => $langInfo) {
+		// Get first part of langcode.
+		$abbr = explode('-', $langInfo['language']->language);
+		$abbr = (!empty($abbr[0])) ?$abbr[0] : $language;
+
+		$name = $langInfo['language']->native;
+		$vars['links'][$language]['title'] = '<abbr title="' . $name . '">' . $abbr . '</abbr>';
+		$vars['links'][$language]['html'] = TRUE;
+	}
+	$content = theme_links($vars);
+	return $content;
 }
 
 /**

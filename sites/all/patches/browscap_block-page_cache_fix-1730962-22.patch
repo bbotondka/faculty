@@ -1,0 +1,84 @@
+diff --git a/README.txt b/README.txt
+index bc494ff..516f30b 100755
+--- a/README.txt
++++ b/README.txt
+@@ -20,3 +20,19 @@ Install as usual, should be under Other package right below Browscap.
+ 
+ This module provides compatibilty with the Mobile Switch modules developer tools:
+ http://drupal.org/project/mobile_switch
++
++
++Since the core Drupal cache provider uses the URL as the cache id
++it's possible to get incorrect pages served from the cache when
++using the Browscap Block module if your mobile and non-mobile pages
++share the same URL. Browscap Block comes with a replacement for the
++core Drupal database caching provider that appends the theme and an
++indicator specifying whether the request is from a mobile device or
++not to the cache id. To use this new cache provider for the page
++cache simply add the following to the end of your settings.php file.
++
++  $conf['cache_backends'][] = 'sites/all/modules/contrib/browscap_block/browscap_block_cache.inc';
++  $conf['cache_class_cache_page'] = 'BrowscapBlockDatabaseCache';
++
++Just make sure the path to the Browscap Block module directory
++matches your installation.
+diff --git a/browscap_block_cache.inc b/browscap_block_cache.inc
+new file mode 100644
+index 0000000..50bf766
+--- /dev/null
++++ b/browscap_block_cache.inc
+@@ -0,0 +1,54 @@
++<?php
++
++/**
++ * @file
++ * Provides a cache implementation to be used in conjunction with the
++ * browscap_block module.
++ *
++ * This is only intended to be used as a replacement for the page cache
++ * although it can be used as the default cache.
++ * It appends the override from the URL or cookie and whether or not
++ * the request was from a mobile device to the cache id.
++ */
++
++class BrowscapBlockDatabaseCache extends DrupalDatabaseCache implements DrupalCacheInterface {
++
++  /**
++   * Overrides DrupalDatabaseCache::getMultiple().
++   */
++  function getMultiple(&$cids) {
++    if (is_array($cids)) {
++      foreach ($cids as $key => $cid) {
++        $cids[$key] = $cid . $this->getExtraCid();
++      }
++    }
++    return parent::getMultiple($cids);
++  }
++
++  /**
++   * Overrides DrupalDatabaseCache::set().
++   */
++  function set($cid, $data, $expire = CACHE_PERMANENT) {
++    $cid .= $this->getExtraCid();
++    return parent::set($cid, $data, $expire);
++  }
++
++  protected function getExtraCid() {
++    $extra = '';
++    if (function_exists('browscap_get_browser')) {
++      $browser = browscap_get_browser();
++      if (is_array($browser)) {
++        if ($browser['istablet']) {
++          $extra .= ':tablet';
++        } 
++        elseif ($browser['ismobiledevice']) {
++          $extra .= ':mobile';
++        }
++        else {
++          $extra .= ':standard';
++        }
++      }
++    }
++    return $extra;
++  }
++}
