@@ -1,8 +1,10 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the Faculty publication feature.
  */
+
+include_once 'faculty_publication.features.inc';
 
 /**
  * Implements hook_entity_view().

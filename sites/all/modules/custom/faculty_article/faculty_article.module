@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Faculty article feature.
+ */
+
+include_once 'faculty_article.features.inc';

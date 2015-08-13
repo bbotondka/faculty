@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Faculty video feature.
+ */
+
+include_once 'faculty_video.features.inc';
