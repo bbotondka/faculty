@@ -28,8 +28,8 @@ function faculty_basic_page_default_fe_block_settings() {
         'weight' => 0,
       ),
       'faculty' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'bottom_grey_content',
+        'status' => 1,
         'theme' => 'faculty',
         'weight' => 0,
       ),
@@ -60,8 +60,8 @@ function faculty_basic_page_default_fe_block_settings() {
         'weight' => 0,
       ),
       'faculty' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'middle_white_content',
+        'status' => 1,
         'theme' => 'faculty',
         'weight' => 0,
       ),
@@ -92,8 +92,8 @@ function faculty_basic_page_default_fe_block_settings() {
         'weight' => 0,
       ),
       'faculty' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'middle_grey_content',
+        'status' => 1,
         'theme' => 'faculty',
         'weight' => 0,
       ),
