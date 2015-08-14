@@ -71,6 +71,9 @@ function faculty_migrate_create_user($name, $mail, $professor_id) {
 			'%professor_id' => $professor_id,
 		), WATCHDOG_ERROR);
 
+        // Try to update name and mail of user.
+        faculty_migrate_update_user($account, $name, $mail);
+
 		return $account;
 	}
 
@@ -81,7 +84,10 @@ function faculty_migrate_create_user($name, $mail, $professor_id) {
 			'%name' => $name,
 		), WATCHDOG_ERROR);
 
-		return FALSE;
+        // Try to update name and mail of user.
+        faculty_migrate_update_user($account, $name, $mail);
+
+		return $account;
 	}
 
 	// User mail already used.
@@ -91,7 +97,10 @@ function faculty_migrate_create_user($name, $mail, $professor_id) {
 			'%mail' => $mail,
 		), WATCHDOG_ERROR);
 
-		return FALSE;
+        // Try to update name and mail of user.
+        faculty_migrate_update_user($account, $name, $mail);
+
+		return $account;
 	}
 
 	// This will generate a random password, you could set your own here.
@@ -130,6 +139,49 @@ function faculty_migrate_create_user($name, $mail, $professor_id) {
 }
 
 /**
+ * Try to update name and mail of user account.
+ *
+ * @param $account
+ *   Account object.
+ * @param $name
+ *   New name of user
+ * @param $mail
+ *   New mail of user.
+ */
+function faculty_migrate_update_user($account, $name, $mail) {
+  $update_status = FALSE;
+
+  if ($account->name !== $name) {
+    // Update name.
+    $account->name = $name;
+
+    $update_status = TRUE;
+  }
+
+  if ($account->mail !== $mail) {
+    // Update mail.
+    $account->mail = $mail;
+
+    $update_status = TRUE;
+  }
+
+  if (!$update_status) {
+    // Skip if data not updated.
+    return;
+  }
+
+  // Save user.
+  if (!user_save($account)) {
+    // Log error.
+    watchdog('faculty_migrate', 'Error when trying to update name (%name) and mail (%mail) of user (%uid): %mail. See faculty_migrate_update_user()', array(
+        '%uid' => $account->uid,
+        '%name' => $name,
+        '%mail' => $mail,
+      ), WATCHDOG_ERROR);
+  }
+}
+
+/**
  * Get base_url.
  *
  * Prevent error when user execute drush migrate commands.
@@ -161,6 +213,9 @@ function faculty_migrate_user_profile_custom_prepare_row($row) {
 	// @Todo: Check if existing profil exists for current user
 	// @Todo: but destination_id doesn't exists in table of mapping.
 
+    // Include pathauto.inc file to use pathauto_cleanstring().
+    module_load_include('inc', 'pathauto');
+
 	// Check if related user exists.
 	if (empty($row->migrate_map_destid1)) {
 		// Potentially user isn't already created.
@@ -168,16 +223,34 @@ function faculty_migrate_user_profile_custom_prepare_row($row) {
 		// @Todo: check format of data before insert.
 
 		// Get professor id from current row.
-		$current_professor_id = $row->profid;
-		// Get username from current row.
-		$name = $row->name;
+		$current_professor_id = $row->{FACULTY_MIGRATE_USER_SOURCE_ID};
+
+        if (empty($row->email)) {
+          // Log error.
+          watchdog('faculty_migrate', 'Email is required to import this row: <pre>@row</pre>.', array(
+              '@row' => print_r($row, TRUE),
+            ), WATCHDOG_ERROR);
+
+          // Mail is required.
+          return FALSE;
+        }
+
 		// Get mail from current row.
-		$mail = $row->mail;
+		$mail = $row->email;
+        // Generate username from mail.
+        $name = pathauto_cleanstring($mail);
 
 		// Now we try to create user.
 		$new_user = faculty_migrate_create_user($name, $mail, $current_professor_id);
 
 		if (empty($new_user)) {
+            // Log error.
+            watchdog('faculty_migrate', 'User creation: Skip this row because creation of user failed: name: %name, mail: %mail, current_professor_id: %current_professor_id', array(
+                '%name' => $name,
+                '%mail' => $mail,
+                '%current_professor_id' => $current_professor_id,
+              ), WATCHDOG_ERROR);
+
 			// Skip this row because creation of user failed.
 			return FALSE;
 		}
@@ -203,6 +276,20 @@ function faculty_migrate_user_profile_custom_prepare_row($row) {
 			// Skip this row because loading of user failed.
 			return FALSE;
 		}
+
+        if (empty($row->email)) {
+          // Log error.
+          watchdog('faculty_migrate', 'profile2_load: Email is required to import this row: <pre>@row</pre>.', array(
+              '@row' => print_r($row, TRUE),
+            ), WATCHDOG_ERROR);
+
+          // Mail is required.
+          return FALSE;
+        }
+
+        // Try to update name and mail of user.
+        $username = pathauto_cleanstring($row->email);
+        faculty_migrate_update_user($existing_user_object, $username, $row->email);
 
 		// We save existing user id related to current profile2.
 		$row->related_user_id = $profile_object->uid;

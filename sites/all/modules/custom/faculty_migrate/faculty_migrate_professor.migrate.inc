@@ -52,8 +52,10 @@ class MigrateFacultyProfessorMigration extends Migration {
 		$this->addFieldMapping('uid')
 		     ->defaultValue(1);
 
-		// Degree.
-		//$this->addFieldMapping('field_degree', 'degree');
+		// Firstname.
+		$this->addFieldMapping('field_firstname', 'firstname');
+		// Lastname.
+		$this->addFieldMapping('field_lastname', 'lastname');
 
 	}
 
@@ -65,7 +67,8 @@ class MigrateFacultyProfessorMigration extends Migration {
 	public function fields_from_json() {
 		return array(
 			FACULTY_MIGRATE_USER_SOURCE_ID => 'Unique ID for each source data row',
-			//'degree' => 'Degree source data',
+			'firstname' => 'Firstname from source data',
+			'lastname' => 'Lastname from source data',
 		);
 	}
 
@@ -76,11 +79,9 @@ class MigrateFacultyProfessorMigration extends Migration {
 			return FALSE;
 		}
 
-        var_dump($row);
-
 		// Custom prepare row.
 		// Try to create user in this function.
-		//return faculty_migrate_user_profile_custom_prepare_row($row);
+		return faculty_migrate_user_profile_custom_prepare_row($row);
 	}
 
 	public function prepare($profile2, stdClass $row) {
@@ -88,25 +89,15 @@ class MigrateFacultyProfessorMigration extends Migration {
 			$profile2->uid = $row->related_user_id;
 		}
 
-		/*
-		$base_url = faculty_migrate_get_base_url();
-		$item_url = $base_url . '/' . drupal_get_path('module', 'faculty_migrate') . '/data/prof_' . $row->profid . '.json';
-
-		var_dump(array(
-			'item_url' => $item_url,
-			'data' => faculty_migrate_get_json($item_url),
-		));
-
-		// @Todo: Update profile2 fields with
-		// @Todo: faculty_migrate_get_json($item_url) data result.
-		*/
-
 	}
 
 	public function complete($profile2, stdClass $row) {}
 
 }
 
+/**
+ * Class FacultyProfessorListJSON
+ */
 class FacultyProfessorListJSON extends MigrateListJSON {
   /**
    * Originally this class assumed that the results would be all that was in the JSON
@@ -150,6 +141,9 @@ class FacultyProfessorListJSON extends MigrateListJSON {
   }
 }
 
+/**
+ * Class FacultyProfessorItemJSON
+ */
 class FacultyProfessorItemJSON extends MigrateItemJSON {
   protected $data = array();
 
@@ -169,25 +163,22 @@ class FacultyProfessorItemJSON extends MigrateItemJSON {
 
     }
 
-    // We search id in $this->data.
-    foreach ($this->data as $position => $field_value) {
-      if ($id == $position){
-        $current_row_array[] = $field_value;
-        break;
-      }
-
-    }
-
     // Convert array in object.
-    $current_row_object = $this->parseArrayToObject($current_row_array);
+    $current_row_object = $this->parseArrayToObject(array($this->data[$id]));
 
     return $current_row_object;
   }
 
+  /**
+   * Convert array to object.
+   *
+   * @param $array
+   * @return object|stdClass
+   */
   public function parseArrayToObject($array) {
     $object= new stdClass();
     if (is_array($array) && count($array) > 0) {
-      foreach ($array as $name=>$value) {
+      foreach ($array as $name => $value) {
         $name = trim($name);
         if (is_array($value)){
           $object = (object) $value;
@@ -196,4 +187,5 @@ class FacultyProfessorItemJSON extends MigrateItemJSON {
     }
     return $object;
   }
+
 }
