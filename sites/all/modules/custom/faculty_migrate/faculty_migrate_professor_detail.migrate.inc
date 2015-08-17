@@ -2,6 +2,8 @@
 
 // Fix bug with global functions file not found.
 include_once('faculty_migrate_global_functions.inc');
+// Use custom function FacultyProfessorListJSON().
+include_once('faculty_migrate_professor.migrate.inc');
 
 /**
  * Class MigrateFacultyProfessorDetailMigration
@@ -33,13 +35,13 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 		$base_url = faculty_migrate_get_base_url();
 		// Path to json files.
 		$faculty_migrate_path = drupal_get_path('module', 'faculty_migrate');
-		$list_url = $base_url . '/' . $faculty_migrate_path . '/data/profs.json';
-		$item_url = $base_url . '/' . $faculty_migrate_path . '/data/prof_:id.json';
+		$list_url = $base_url . '/' . $faculty_migrate_path . '/data/allProf.json';
+		$item_url = $base_url . '/' . $faculty_migrate_path . '/data/cv_:id.json';
 
 		// Define source of migration.
 		$this->source = new MigrateSourceList(
-			new MigrateListJSON($list_url),
-			new MigrateItemJSON($item_url, array()),
+			new FacultyProfessorListJSON($list_url),
+			new FacultyProfessorDetailItemJSON($item_url, array()),
 			$this->fields_from_json()
 		);
 
@@ -53,7 +55,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 		     ->defaultValue(1);
 
 		// Other entry.
-		$this->addFieldMapping('field_other_entry', 'other_entry');
+		//$this->addFieldMapping('field_other_entry', 'other_entry');
 
 	}
 
@@ -65,7 +67,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 	public function fields_from_json() {
 		return array(
 			FACULTY_MIGRATE_USER_SOURCE_ID => 'Unique ID for each source data row',
-			'other_entry' => 'Other entry from separated json file'
+			//'other_entry' => 'Other entry from separated json file'
 		);
 	}
 
@@ -75,6 +77,8 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 		if (parent::prepareRow($row) === FALSE) {
 			return FALSE;
 		}
+
+		var_dump($row);
 
 		// Custom prepare row.
 		// Try to create user in this function.
@@ -90,5 +94,31 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 	}
 
 	public function complete($profile2, stdClass $row) {}
+
+}
+
+/**
+ * Class FacultyProfessorItemJSON
+ */
+class FacultyProfessorDetailItemJSON extends MigrateItemJSON {
+	protected $data = array();
+
+	public function getItem($id) {
+
+		$item_url = $this->constructItemUrl($id);
+		// Get the JSON object at the specified URL
+		$json = $this->loadJSONUrl($item_url);
+		// Return json object in prof.
+		if ($json && $json->prof) {
+			return $json->prof;
+		}
+		else {
+			$migration = Migration::currentMigration();
+			$message =  t('Loading of !objecturl failed:', array('!objecturl' => $item_url));
+			$migration->getMap()->saveMessage(
+				array($id), $message, MigrationBase::MESSAGE_ERROR);
+			return NULL;
+		}
+	}
 
 }

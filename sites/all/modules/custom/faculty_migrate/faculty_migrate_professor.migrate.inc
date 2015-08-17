@@ -40,8 +40,11 @@ class MigrateFacultyProfessorMigration extends Migration {
         $decoded_source_response = drupal_json_decode($source_json);
 
 		// Define source of migration.
-		//$this->source = new MigrateSourceJSON($source_url, FACULTY_MIGRATE_USER_SOURCE_ID, $this->fields_from_json());
-		$this->source = new MigrateSourceList(new FacultyProfessorListJSON($source_url), new FacultyProfessorItemJSON($source_url, $decoded_source_response), $this->fields_from_json());
+		$this->source = new MigrateSourceList(
+			new FacultyProfessorListJSON($source_url),
+			new FacultyProfessorItemJSON($source_url, $decoded_source_response),
+			$this->fields_from_json()
+		);
 
 		// Destination of migration: profile2 entity type.
 		$this->destination = new MigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME);
