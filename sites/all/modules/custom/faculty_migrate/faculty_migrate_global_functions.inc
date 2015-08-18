@@ -37,14 +37,40 @@ function faculty_migrate_user_load_by_professor_id($professor_id, $profile_type,
 	return FALSE;
 }
 
+/**
+ * Change users status (active or blocked) from profile ids.
+ *
+ * @param $profile_ids
+ * @param int $user_status
+ *
+ * @throws Exception
+ */
 function faculty_migrate_change_user_status_from_pids($profile_ids, $user_status = 0) {
-	$user_ids = db_select('profile', 'p')
-		->fields('p', 'uid')
+	// Get user ids.
+	$result = db_select('profile', 'p')
+		->fields('p', array('uid'))
 		->condition('pid', $profile_ids,'IN')
-		->execute()
-		->fetchAll();
+		->execute();
 
-	var_dump($user_ids);
+	$user_ids = array();
+	while($record = $result->fetchAssoc()) {
+		$user_ids[] = $record['uid'];
+	}
+
+	if (empty($user_ids)) {
+		return;
+	}
+
+	// Load users.
+	$users_loaded = user_load_multiple($user_ids);
+	// For each user.
+	foreach($users_loaded as $uid => $user) {
+		// Update status.
+		$user->status = intval($user_status);
+		// Save user change.
+		user_save($user);
+	}
+
 }
 
 /**
@@ -121,7 +147,9 @@ function faculty_migrate_create_user($name, $mail, $professor_id) {
 		'name' => $name,
 		'mail' => $mail,
 		'pass' => $password,
-		'status' => 1,
+		// By default user is blocked. We publish is profile if an img related
+		// is available.
+		'status' => 0,
 		'init' => 'email address',
 		'roles' => array(
 			DRUPAL_AUTHENTICATED_RID => 'authenticated user',
