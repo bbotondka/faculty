@@ -584,3 +584,6 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 # See https://www.drupal.org/node/1730962.
 $conf['cache_backends'][] = 'sites/all/modules/contrib/browscap_block/browscap_block_cache.inc';
 $conf['cache_class_cache_page'] = 'BrowscapBlockDatabaseCache';
+
+# Quick fic to resolve on https://www.drupal.org/node/442560 vm.
+$conf['admin_menu_cache_client'] = FALSE;

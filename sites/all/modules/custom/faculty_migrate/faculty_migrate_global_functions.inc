@@ -37,6 +37,16 @@ function faculty_migrate_user_load_by_professor_id($professor_id, $profile_type,
 	return FALSE;
 }
 
+function faculty_migrate_change_user_status_from_pids($profile_ids, $user_status = 0) {
+	$user_ids = db_select('profile', 'p')
+		->fields('p', 'uid')
+		->condition('pid', $profile_ids,'IN')
+		->execute()
+		->fetchAll();
+
+	var_dump($user_ids);
+}
+
 /**
  * Try to create user.
  *

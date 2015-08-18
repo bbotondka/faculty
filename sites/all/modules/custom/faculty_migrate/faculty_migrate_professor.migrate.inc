@@ -26,7 +26,7 @@ class MigrateFacultyProfessorMigration extends Migration {
 					'not null' => TRUE,
 				)
 			),
-			MigrateDestinationProfile2::getKeySchema()
+			FacultyProfessorMigrateDestinationProfile2::getKeySchema()
 		);
 
 		// Get base url.
@@ -34,20 +34,15 @@ class MigrateFacultyProfessorMigration extends Migration {
 		// Path to json files.
 		$source_url = $base_url . '/' . drupal_get_path('module', 'faculty_migrate') . '/data/allProf.json';
 
-        // Get an array of json source to build custom item object.
-        $source_response = drupal_http_request($source_url);
-        $source_json = $source_response->data;
-        $decoded_source_response = drupal_json_decode($source_json);
-
 		// Define source of migration.
 		$this->source = new MigrateSourceList(
 			new FacultyProfessorListJSON($source_url),
-			new FacultyProfessorItemJSON($source_url, $decoded_source_response),
+			new FacultyProfessorItemJSON($source_url, array()),
 			$this->fields_from_json()
 		);
 
 		// Destination of migration: profile2 entity type.
-		$this->destination = new MigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME);
+		$this->destination = new FacultyProfessorMigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME);
 
 		// Destination - Source mapping.
 		// Save original id from json file to retrieve user related to this profile.
@@ -94,12 +89,43 @@ class MigrateFacultyProfessorMigration extends Migration {
 
 	}
 
+	public function postRollback() {
+		parent::postRollback();
+		// Code to execute after the last article row has been deleted
+
+		var_dump('post rollback');
+	}
+
 	public function complete($profile2, stdClass $row) {}
 
 }
 
 /**
- * Class FacultyProfessorListJSON
+ * Class FacultyProfessorMigrateDestinationProfile2.
+ */
+class FacultyProfessorMigrateDestinationProfile2 extends MigrateDestinationProfile2 {
+	/**
+	 * Give handlers a shot at cleaning up after an entity has been rolled back.
+	 *
+	 * @param $entity_id
+	 *  ID of the entity which has been deleted.
+	 */
+	public function completeRollback($profile_ids) {
+		parent::completeRollback($profile_ids);
+
+		if (empty($profile_ids)) {
+			return;
+		}
+
+		// We disable account related to $profile_ids.
+		var_dump($profile_ids);
+
+		faculty_migrate_change_user_status_from_pids($profile_ids);
+	}
+}
+
+/**
+ * Class FacultyProfessorListJSON.
  */
 class FacultyProfessorListJSON extends MigrateListJSON {
   /**
@@ -150,27 +176,41 @@ class FacultyProfessorListJSON extends MigrateListJSON {
 class FacultyProfessorItemJSON extends MigrateItemJSON {
   protected $data = array();
 
-  public function getItem($id) {
+	public function getItem($id) {
 
-    if (empty($this->data)) {
-      $professor_entries = $this->httpOptions[FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY];
-      $final_professor_array = array();
+		if (empty($this->data)) {
 
-      // For each professor.
-      foreach ($professor_entries[FACULTY_MIGRATE_PROFESSOR_SINGULAR_KEY_ENTRY] as $dataobj){
-        $final_professor_array[$dataobj[FACULTY_MIGRATE_USER_SOURCE_ID]] = $dataobj;
-      }
+			$item_url = $this->constructItemUrl($id);
+			// Get the JSON object at the specified URL
+			$json = $this->loadJSONUrl($item_url);
+			// Return json object in prof.
+			if ($json
+			    && $json->{FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY}
+			    && $json->{FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY}->{FACULTY_MIGRATE_PROFESSOR_SINGULAR_KEY_ENTRY}
+			) {
+				// For each professor in json.
+				foreach ($json->{FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY}->{FACULTY_MIGRATE_PROFESSOR_SINGULAR_KEY_ENTRY} as $prof) {
+					$this->data[$prof->{'@profid'}] = $prof;
+				}
 
-      // We cache the parsed JSON at $this->data.
-      $this->data = $final_professor_array;
+			}
+			else {
+				$migration = Migration::currentMigration();
+				$message =  t('Loading of !objecturl failed:', array('!objecturl' => $item_url));
+				$migration->getMap()->saveMessage(
+					array($id), $message, MigrationBase::MESSAGE_ERROR);
+				return NULL;
+			}
 
-    }
+		}
 
-    // Convert array in object.
-    $current_row_object = $this->parseArrayToObject(array($this->data[$id]));
+		// Check existing data.
+		if (empty($this->data[$id])) {
+			return NULL;
+		}
 
-    return $current_row_object;
-  }
+		return $this->data[$id];
+	}
 
   /**
    * Convert array to object.
