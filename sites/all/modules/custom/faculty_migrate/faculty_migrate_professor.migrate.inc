@@ -89,15 +89,6 @@ class MigrateFacultyProfessorMigration extends Migration {
 
 	}
 
-	public function postRollback() {
-		parent::postRollback();
-		// Code to execute after the last article row has been deleted
-
-		var_dump('post rollback');
-	}
-
-	public function complete($profile2, stdClass $row) {}
-
 }
 
 /**
@@ -105,21 +96,21 @@ class MigrateFacultyProfessorMigration extends Migration {
  */
 class FacultyProfessorMigrateDestinationProfile2 extends MigrateDestinationProfile2 {
 	/**
-	 * Give handlers a shot at cleaning up after an entity has been rolled back.
+	 * Give handlers a shot at cleaning up before an entity has been rolled back.
 	 *
 	 * @param $entity_id
-	 *  ID of the entity which has been deleted.
+	 *  ID of the entity about to be deleted..
 	 */
-	public function completeRollback($profile_ids) {
-		parent::completeRollback($profile_ids);
+	public function prepareRollback($profile_ids) {
+		parent::prepareRollback($profile_ids);
 
 		if (empty($profile_ids)) {
 			return;
 		}
 
 		// We disable account related to $profile_ids.
-		var_dump($profile_ids);
 
+		// Change user status (status set to 0).
 		faculty_migrate_change_user_status_from_pids($profile_ids);
 	}
 }
