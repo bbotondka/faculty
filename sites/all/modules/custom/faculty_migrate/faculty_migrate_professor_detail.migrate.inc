@@ -11,6 +11,7 @@ include_once('faculty_migrate_professor.migrate.inc');
  * Second version of migration class.
  */
 class MigrateFacultyProfessorDetailMigration extends Migration {
+    protected $term_code_by_row = array();
 
 	public function __construct($arguments) {
 		// Call parent constructor.
@@ -28,7 +29,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 					'not null' => TRUE,
 				)
 			),
-			MigrateDestinationProfile2::getKeySchema()
+            FacultyProfessorMigrateDestinationProfile2::getKeySchema()
 		);
 
 		// Get base url.
@@ -46,7 +47,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 		);
 
 		// Destination of migration: profile2 entity type.
-		$this->destination = new MigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME);
+		$this->destination = new FacultyProfessorMigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME);
 
 		// Destination - Source mapping.
 		// Save original id from json file to retrieve user related to this profile.
@@ -54,10 +55,94 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 		$this->addFieldMapping('uid')
 		     ->defaultValue(1);
 
-		// Other entry.
-		//$this->addFieldMapping('field_other_entry', 'other_entry');
+		// Deptped.
+		$this->addFieldMapping('field_deptped_ref', 'deptped')
+             ->callbacks(array($this, 'get_lib_fr'));
+        // Try to create term if doesn't exist.
+        $this->addFieldMapping('field_deptped_ref:create_term')
+          ->defaultValue(TRUE);
+        //$this->addFieldMapping('field_deptped_ref:ignore_case')
+        //  ->defaultValue(TRUE);
 
 	}
+
+    /**
+     * Get lib_fr from category entry.
+     *
+     * @param $value
+     * @return mixed
+     */
+    protected function get_lib_fr($value) {
+      $current_key = $this->source->getCurrentKey();
+
+      if (empty($current_key['@profid'])) {
+        watchdog('faculty_migrate', 'Invalid @profid on <pre>@current_key</pre>. Value: <pre>@value</pre>.', array(
+            '@value' => print_r($value, TRUE),
+            '@current_key' => print_r($current_key, TRUE)
+          ), WATCHDOG_ERROR);
+
+        return t('Uncategorized');
+      }
+
+      if (empty($value->lib_fr)) {
+        watchdog('faculty_migrate', 'Invalid lib_fr entry on <pre>@current_key</pre>. Value: <pre>@value</pre>.', array(
+            '@value' => print_r($value, TRUE),
+            '@current_key' => print_r($current_key, TRUE)
+          ), WATCHDOG_ERROR);
+
+        return t('Uncategorized');
+      }
+
+      if (empty($value->{'@code'})) {
+        watchdog('faculty_migrate', 'Invalid @code entry on <pre>@current_key</pre>. Value: <pre>@value</pre>.', array(
+            '@value' => print_r($value, TRUE),
+            '@current_key' => print_r($current_key, TRUE)
+          ), WATCHDOG_ERROR);
+
+        return t('Uncategorized');
+      }
+
+      // @Todo: Bad perf here. Best way : create new class to import all terms before.
+      // We save terms by row and code.
+      if ($current_field_mapping_key = $this->get_current_field_mapping($value->{'@code'})) {
+        $this->term_code_by_row[$current_key['@profid']][$current_field_mapping_key][$value->{'@code'}] = $value->lib_fr;
+      }
+
+      return $value->lib_fr;
+    }
+
+  /**
+   * Get current field mapping key from @code.
+   *
+   * @param $code
+   *   '@code' entry.
+   * @return bool|int|string
+   *   Return key or FALSE.
+   */
+  protected function get_current_field_mapping($code) {
+    $current_row = $this->source->current();
+
+    // For each row.
+    foreach($current_row as $key => $entry) {
+      if (!is_object($entry)) {
+        continue;
+      }
+
+      if (empty($entry->{'@code'})) {
+        continue;
+      }
+
+      if ($entry->{'@code'} !== $code) {
+        continue;
+      }
+
+      // Key match with $code.
+      return $key;
+    }
+
+    // Default value;
+    return FALSE;
+  }
 
 	/**
 	 * Get entry of each row from json source.
@@ -91,7 +176,47 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 
 	}
 
-	public function complete($profile2, stdClass $row) {}
+	public function complete($profile2, stdClass $row) {
+
+      // @Todo: Bad perf here. Best way : create new class to import all terms before.
+      $this->set_code_in_related_terms($profile2, $row);
+    }
+
+  /**
+   * Set field_code for related terms.
+   *
+   * @Todo: Bad perf here. Best way : create new class to import all terms before.
+   *
+   * @param $profile2
+   * @param stdClass $row
+   */
+  protected function set_code_in_related_terms($profile2, stdClass $row) {
+      // Skip empty term on current row.
+      if (empty($this->term_code_by_row[$row->{'@profid'}])) {
+        return;
+      }
+
+      // For each field_name to attach @code.
+      foreach($this->term_code_by_row[$row->{'@profid'}] as $key => $term_value) {
+        $term_field_name = 'field_' . $key . '_ref';
+
+        // For each term.
+        foreach($term_value as $code => $term_name) {
+
+          $profile2_wrapper = entity_metadata_wrapper('profile2', $profile2);
+
+          // Wrap term
+          if ($profile2_wrapper->{$term_field_name}->getIdentifier()) {
+            $term_wrapper = entity_metadata_wrapper('taxonomy_term', $profile2_wrapper->{$term_field_name}->tid->value());
+
+            $term_wrapper->field_code->set($code);
+            $term_wrapper->save();
+          }
+
+        }
+
+      }
+    }
 
 }
 
