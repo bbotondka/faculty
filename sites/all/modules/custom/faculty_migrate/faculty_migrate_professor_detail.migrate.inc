@@ -78,8 +78,6 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 			return FALSE;
 		}
 
-		var_dump($row);
-
 		// Custom prepare row.
 		// Try to create user in this function.
 		return faculty_migrate_user_profile_custom_prepare_row($row);
