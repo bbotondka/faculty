@@ -7,6 +7,11 @@
 // Prevent error with drush migrate commands when import users and contents.
 define('FACULTY_MIGRATE_BASE_URL', 'http://faculty.dev');
 
+define('FACULTY_MIGRATE_DEPTPED_SOURCE_ID', '@code');
+define('FACULTY_MIGRATE_DEPTPED_VOC_MACHINE_NAME', 'deptped');
+define('FACULTY_MIGRATE_DEPTPED_PLURAL_KEY_ENTRY', 'deptpeds');
+define('FACULTY_MIGRATE_DEPTPED_SINGULAR_KEY_ENTRY', 'deptped');
+
 define('FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY', 'professors');
 define('FACULTY_MIGRATE_PROFESSOR_SINGULAR_KEY_ENTRY', 'professor');
 define('FACULTY_MIGRATE_PROFESSOR_DETAIL_SINGULAR_KEY_ENTRY', 'prof');
