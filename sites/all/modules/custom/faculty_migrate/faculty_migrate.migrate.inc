@@ -16,6 +16,11 @@ function faculty_migrate_migrate_api() {
 			),
 		),
 		'migrations' => array(
+            // Import terms of taxonomies.
+            'FacultyDeptped' => array(
+              'class_name' => 'MigrateFacultyDeptpedMigration',
+              'group_name' => 'faculty',
+            ),
 			// Import all entries in list of professors (main json file).
 			// profs.json
 			'FacultyProfessor' => array(
@@ -27,8 +32,8 @@ function faculty_migrate_migrate_api() {
 			'FacultyProfessorDetail' => array(
 				'class_name' => 'MigrateFacultyProfessorDetailMigration',
 				'group_name' => 'faculty',
-				//'dependencies' => array(
 				'soft_dependencies' => array(
+                    'FacultyDeptped',
 					'FacultyProfessor',
 				),
 			),

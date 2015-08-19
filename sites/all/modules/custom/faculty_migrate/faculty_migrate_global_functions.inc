@@ -665,3 +665,54 @@ function faculty_migrate_extract_id_from_filename($filename) {
 	// Default result.
 	return FALSE;
 }
+
+/**
+ * Prepare pseudo field with @code.
+ *
+ * @param $row
+ *   $current row to alter by reference.
+ * @param $pseudo_field_name
+ *   Pseudo field name (appear in row).
+ *
+ * @return bool|mixed
+ *   Return @code or FALSE.
+ */
+function faculty_migrate_prepare_pseudo_field_with_code(&$row, $pseudo_field_name) {
+
+  if (empty($row->deptped->{FACULTY_MIGRATE_DEPTPED_SOURCE_ID})) {
+    return FALSE;
+  }
+
+  return $row->{$pseudo_field_name} = $row->deptped->{FACULTY_MIGRATE_DEPTPED_SOURCE_ID};
+
+}
+
+/**
+ * Get tid from @code.
+ *
+ * @param $row
+ * @return bool|mixed
+ */
+function faculty_migrate_get_tid_from_code(&$row) {
+  if (empty($row->deptped->{FACULTY_MIGRATE_DEPTPED_SOURCE_ID})) {
+    return FALSE;
+  }
+
+  $query = new EntityFieldQuery();
+
+  $query->entityCondition('entity_type', 'taxonomy_term')
+    ->entityCondition('bundle', FACULTY_MIGRATE_DEPTPED_VOC_MACHINE_NAME)
+    ->fieldCondition('field_code', 'value', $row->deptped->{FACULTY_MIGRATE_DEPTPED_SOURCE_ID}, '=');
+
+  $result = $query->execute();
+
+  if (isset($result['taxonomy_term'])) {
+    // Get unique tid.
+    $tid = reset(array_keys($result['taxonomy_term']));
+
+    return $row->deptped_tid = $tid;
+  }
+
+  // Default return.
+  return FALSE;
+}
