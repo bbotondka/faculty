@@ -93,9 +93,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
         }
 
         // Prepare deptped_code.
-        // @Todo: Add other params to use this function with other category entry.
-        // @Todo: Not just deptped.
-        if (faculty_migrate_prepare_pseudo_field_with_code($row, $this->pseudo_field_name) === FALSE) {
+        if (faculty_migrate_prepare_pseudo_field_with_code($row, FACULTY_MIGRATE_DEPTPED_SINGULAR_KEY_ENTRY , FACULTY_MIGRATE_DEPTPED_SOURCE_ID) === FALSE) {
           return FALSE;
         }
 

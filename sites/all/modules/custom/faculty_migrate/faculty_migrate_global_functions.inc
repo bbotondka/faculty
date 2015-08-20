@@ -677,13 +677,13 @@ function faculty_migrate_extract_id_from_filename($filename) {
  * @return bool|mixed
  *   Return @code or FALSE.
  */
-function faculty_migrate_prepare_pseudo_field_with_code(&$row, $pseudo_field_name) {
+function faculty_migrate_prepare_pseudo_field_with_code(&$row, $source_field_name, $source_id_code) {
 
-  if (empty($row->deptped->{FACULTY_MIGRATE_DEPTPED_SOURCE_ID})) {
+  if (empty($row->{$source_field_name}->{$source_id_code})) {
     return FALSE;
   }
 
-  return $row->{$pseudo_field_name} = $row->deptped->{FACULTY_MIGRATE_DEPTPED_SOURCE_ID};
+  return $row->{$source_field_name . '_code'} = $row->{$source_field_name}->{$source_id_code};
 
 }
 
