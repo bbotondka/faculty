@@ -42,6 +42,10 @@ class MigrateFacultyProfessorCvMigration extends Migration {
 		$this->source = new MigrateSourceList($list, $item, $fields);
 		$this->destination = new MigrateDestinationFile('file', 'MigrateFileUri');
 
+        // File exists replace.
+        $this->addFieldMapping('file_replace')
+          ->defaultValue(FILE_EXISTS_REPLACE);
+
 		// Save to the default file scheme.
 		$this->addFieldMapping('destination_dir')
 		     ->defaultValue(variable_get('file_default_scheme', 'public') . '://');
@@ -66,7 +70,7 @@ class MigrateFacultyProfessorCvMigration extends Migration {
 	public function complete($cv, stdClass $row) {
 
 		// Try to attach current cv to related profile2.
-		faculty_migrate_attach_cv_to_related_profile2($cv, $row);
+		//faculty_migrate_attach_cv_to_related_profile2($cv, $row);
 
 	}
 

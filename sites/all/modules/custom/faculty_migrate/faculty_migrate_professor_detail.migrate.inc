@@ -33,7 +33,7 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 					'not null' => TRUE,
 				)
 			),
-            FacultyProfessorMigrateDestinationProfile2::getKeySchema()
+          MigrateDestinationProfile2::getKeySchema()
 		);
 
 		// Get base url.
@@ -51,13 +51,13 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 		);
 
 		// Destination of migration: profile2 entity type.
-		$this->destination = new FacultyProfessorMigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME);
+		$this->destination = new MigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_DETAIL_PROFILE_MACHINE_NAME);
 
 		// Destination - Source mapping.
 		// Save original id from json file to retrieve user related to this profile.
 		$this->addFieldMapping('field_professor_id', FACULTY_MIGRATE_USER_SOURCE_ID);
-		$this->addFieldMapping('uid')
-		     ->defaultValue(1);
+		$this->addFieldMapping('uid', FACULTY_MIGRATE_USER_SOURCE_ID)
+             ->sourceMigration('FacultyUser');
 
 		// Deptped.
 		$this->addFieldMapping('field_deptped_ref', 'deptped_code')
@@ -88,9 +88,9 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 
 		// Custom prepare row.
 		// Try to create user in this function.
-		if (faculty_migrate_user_profile_custom_prepare_row($row) === FALSE) {
+		/*if (faculty_migrate_user_profile_custom_prepare_row($row) === FALSE) {
           return FALSE;
-        }
+        }*/
 
         // Prepare deptped_code.
         if (faculty_migrate_prepare_pseudo_field_with_code($row, FACULTY_MIGRATE_DEPTPED_SINGULAR_KEY_ENTRY , FACULTY_MIGRATE_DEPTPED_SOURCE_ID) === FALSE) {
@@ -101,9 +101,9 @@ class MigrateFacultyProfessorDetailMigration extends Migration {
 
 	public function prepare($profile2, stdClass $row) {
 
-		if (!empty($row->related_user_id)) {
+		/*if (!empty($row->related_user_id)) {
 			$profile2->uid = $row->related_user_id;
-		}
+		}*/
 
 	}
 

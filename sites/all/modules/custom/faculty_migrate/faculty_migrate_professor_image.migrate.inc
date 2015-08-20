@@ -45,6 +45,10 @@ class MigrateFacultyProfessorImageMigration extends Migration {
 		$this->source = new MigrateSourceList($list, $item, $fields);
 		$this->destination = new MigrateDestinationFile('file', 'MigrateFileUri');
 
+        // File exists replace.
+        $this->addFieldMapping('file_replace')
+          ->defaultValue(FILE_EXISTS_REPLACE);
+
 		// Save to the default file scheme.
 		$this->addFieldMapping('destination_dir')
 		     ->defaultValue(variable_get('file_default_scheme', 'public') . '://');
@@ -64,12 +68,13 @@ class MigrateFacultyProfessorImageMigration extends Migration {
 
 		// Remove the leading forward slash.
 		$row->destination_file = substr($row->sourceid, 1);
+
 	}
 
 	public function complete($image, stdClass $row) {
 
 		// Try to attach current image to related user.
-		faculty_migrate_attach_image_to_related_user($image, $row);
+		//faculty_migrate_attach_image_to_related_user($image, $row);
 
 	}
 
