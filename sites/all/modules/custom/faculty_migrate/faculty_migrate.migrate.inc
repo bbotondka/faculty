@@ -17,6 +17,10 @@ function faculty_migrate_migrate_api() {
 		),
 		'migrations' => array(
             // Import terms of taxonomies.
+            'FacultyCategory' => array(
+              'class_name' => 'MigrateFacultyCategoryMigration',
+              'group_name' => 'faculty',
+            ),
             'FacultyDeptped' => array(
               'class_name' => 'MigrateFacultyDeptpedMigration',
               'group_name' => 'faculty',
