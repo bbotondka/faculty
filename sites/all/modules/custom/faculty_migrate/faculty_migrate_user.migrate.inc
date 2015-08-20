@@ -4,11 +4,11 @@
 include_once('faculty_migrate_global_functions.inc');
 
 /**
- * Class MigrateFacultyProfessorMigration
+ * Class MigrateFacultyUserMigration
  *
  * First version of migration class.
  */
-class MigrateFacultyProfessorMigration extends Migration {
+class MigrateFacultyUserMigration extends Migration {
 
 	public function __construct($arguments) {
 		// Call parent constructor.
@@ -26,7 +26,7 @@ class MigrateFacultyProfessorMigration extends Migration {
 					'not null' => TRUE,
 				)
 			),
-          MigrateDestinationProfile2::getKeySchema()
+          MigrateDestinationUser::getKeySchema()
 		);
 
 		// Get base url.
@@ -36,30 +36,55 @@ class MigrateFacultyProfessorMigration extends Migration {
 
 		// Define source of migration.
 		$this->source = new MigrateSourceList(
-			new FacultyProfessorListJSON($source_url),
-			new FacultyProfessorItemJSON($source_url, array()),
+			new FacultyUserListJSON($source_url),
+			new FacultyUserItemJSON($source_url, array()),
 			$this->fields_from_json()
 		);
 
-		// Destination of migration: profile2 entity type.
-		$this->destination = new MigrateDestinationProfile2(FACULTY_MIGRATE_PROFESSOR_PROFILE_MACHINE_NAME);
+		// Destination of migration: User.
+		$this->destination = new MigrateDestinationUser(array(
+          'md5_passwords' => 1,
+          'language' => 'fr',
+          'text_format' => 'filtered_html'
+        ));
 
-		// Destination - Source mapping.
-		// Save original id from json file to retrieve user related to this profile.
-		$this->addFieldMapping('field_professor_id', FACULTY_MIGRATE_USER_SOURCE_ID);
-		$this->addFieldMapping('uid', FACULTY_MIGRATE_USER_SOURCE_ID)
-             ->sourceMigration('FacultyUser');
+        // Mapped fields
+        $this->addFieldMapping('name', 'prepare_username')
+             ->description(t('Created from email in prepare method'));
+        $this->addFieldMapping('status')
+             ->defaultValue(0);
+        $this->addFieldMapping('mail', 'email');
+        $this->addFieldMapping('picture', 'prepare_imageid')
+          ->sourceMigration('FacultyProfessorImage')
+          ->description(t('Created from @photofac in prepare method'));
+        // Note that these date/time values are coming in as ISO strings, but
+        // Drupal uses UNIX timestamps. The user destination automatically
+        // translates them as necessary.
+        /*$this->addFieldMapping('created', 'posted');
+        $this->addFieldMapping('access', 'last_access');
+        $this->addFieldMapping('login', 'last_login');
+        $this->addFieldMapping('pass', 'password');
+        $this->addFieldMapping('roles', 'positions')
+          ->separator(',')
+          ->sourceMigration('WineRole');
+        $this->addFieldMapping('signature', 'sig');
+        $this->addFieldMapping('signature_format')
+          ->defaultValue($this->basicFormat->format);
+        $this->addFieldMapping('init', 'original_mail');
+        $this->addFieldMapping('field_migrate_example_gender', 'sex')
+          ->description(t('Map from M/F to 0/1 in prepare method'));*/
 
-		// Firstname.
-		$this->addFieldMapping('field_firstname', 'firstname');
-		// Lastname.
-		$this->addFieldMapping('field_lastname', 'lastname');
+      // Unmapped source fields
 
-        // Attach CV file.
-        $this->addFieldMapping('field_cv', 'prepare_cvid')
-          ->sourceMigration('FacultyProfessorCv');
-        $this->addFieldMapping('field_cv:file_class')
-          ->defaultValue('MigrateFileFid');
+      // Unmapped destination fields
+      $this->addUnmigratedDestinations(array(
+          'data',
+          'is_new',
+          'language',
+          'role_names',
+          'theme',
+          'timezone',
+        ));
 
 	}
 
@@ -71,9 +96,8 @@ class MigrateFacultyProfessorMigration extends Migration {
 	public function fields_from_json() {
 		return array(
 			FACULTY_MIGRATE_USER_SOURCE_ID => 'Unique ID for each source data row',
-			'firstname' => 'Firstname from source data',
-			'lastname' => 'Lastname from source data',
-            'prepare_cvid' => 'Created from @cv in prepare method',
+			'prepare_username' => 'Created from email in prepare method',
+			'prepare_imageid' => 'Created from @photofac in prepare method',
 		);
 	}
 
@@ -84,34 +108,40 @@ class MigrateFacultyProfessorMigration extends Migration {
 			return FALSE;
 		}
 
-		// Custom prepare row.
-		// Try to create user in this function.
-		//return faculty_migrate_user_profile_custom_prepare_row($row);
-
-        // Prepare cvid used to attach image to current user.
-        if (isset($row->{'@cv'})
-          && $prepare_cvid = $this->get_cv_with_extension($row->{'@cv'})
-        ) {
-          // Array is required because field can be multiple.
-          $row->prepare_cvid = array($prepare_cvid);
+        // Check if email exists.
+		if (empty($row->email)) {
+            return FALSE;
         }
+
+        // Prepare imageid used to attach image to current user.
+        if (isset($row->{'@photofac'})
+         && $prepare_imageid = $this->get_image_with_extension($row->{'@photofac'})
+        ) {
+          $row->prepare_imageid = $prepare_imageid;
+        }
+
+        // Prepare username from email.
+        // Include pathauto.inc file to use pathauto_cleanstring().
+        module_load_include('inc', 'pathauto');
+        $row->prepare_username = pathauto_cleanstring($row->email);
 
 	}
 
-    /**
-     * Get cvid of pdf file.
-     *
-     * @param $filename
-     *   Filename without extension.
-     *
-     * @return bool
-     *   Filename with extension or FALSE.
-     */
-    protected function get_cv_with_extension($filename) {
-      $result = db_select('migrate_map_facultyprofessorcv', 'mmfpcv')
-        ->fields('mmfpcv', array(
-            'sourceid1'
-          ))
+
+  /**
+   * Get sourceid of file image.
+   *
+   * @param $filename
+   *   Filename without extension.
+   *
+   * @return bool
+   *   Filename with extension or FALSE.
+   */
+  protected function get_image_with_extension($filename) {
+      $result = db_select('migrate_map_facultyprofessorimage', 'mmfpi')
+        ->fields('mmfpi', array(
+          'sourceid1'
+        ))
         ->condition('sourceid1', '%' . db_like($filename) . '%', 'LIKE')
         ->range(0,1)
         ->execute()
@@ -125,18 +155,18 @@ class MigrateFacultyProfessorMigration extends Migration {
     }
 
 	public function prepare($profile2, stdClass $row) {
-		/*if (!empty($row->related_user_id)) {
+		if (!empty($row->related_user_id)) {
 			$profile2->uid = $row->related_user_id;
-		}*/
+		}
 
 	}
 
 }
 
 /**
- * Class FacultyProfessorMigrateDestinationProfile2.
+ * Class FacultyUserMigrateDestinationProfile2.
  */
-class FacultyProfessorMigrateDestinationProfile2 extends MigrateDestinationProfile2 {
+class FacultyUserMigrateDestinationProfile2 extends MigrateDestinationProfile2 {
 	/**
 	 * Give handlers a shot at cleaning up before an entity has been rolled back.
 	 *
@@ -158,9 +188,9 @@ class FacultyProfessorMigrateDestinationProfile2 extends MigrateDestinationProfi
 }
 
 /**
- * Class FacultyProfessorListJSON.
+ * Class FacultyUserListJSON.
  */
-class FacultyProfessorListJSON extends MigrateListJSON {
+class FacultyUserListJSON extends MigrateListJSON {
   /**
    * Originally this class assumed that the results would be all that was in the JSON
    * object. This class has been modified to look inside the JSON object and find the
@@ -204,9 +234,9 @@ class FacultyProfessorListJSON extends MigrateListJSON {
 }
 
 /**
- * Class FacultyProfessorItemJSON
+ * Class FacultyUserItemJSON
  */
-class FacultyProfessorItemJSON extends MigrateItemJSON {
+class FacultyUserItemJSON extends MigrateItemJSON {
   protected $data = array();
 
 	public function getItem($id) {
@@ -221,9 +251,9 @@ class FacultyProfessorItemJSON extends MigrateItemJSON {
 			    && $json->{FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY}
 			    && $json->{FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY}->{FACULTY_MIGRATE_PROFESSOR_SINGULAR_KEY_ENTRY}
 			) {
-				// For each professor in json.
+				// For each user in json.
 				foreach ($json->{FACULTY_MIGRATE_PROFESSOR_PLURAL_KEY_ENTRY}->{FACULTY_MIGRATE_PROFESSOR_SINGULAR_KEY_ENTRY} as $prof) {
-					$this->data[$prof->{'@profid'}] = $prof;
+					$this->data[$prof->{FACULTY_MIGRATE_USER_SOURCE_ID}] = $prof;
 				}
 
 			}

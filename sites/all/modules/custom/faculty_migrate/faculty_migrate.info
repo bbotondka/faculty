@@ -8,6 +8,7 @@ dependencies[] = migrate_extras
 features[features_api][] = api:2
 files[] = faculty_migrate_global_functions.inc
 files[] = faculty_migrate_deptped.migrate.inc
+files[] = faculty_migrate_user.migrate.inc
 files[] = faculty_migrate_professor.migrate.inc
 files[] = faculty_migrate_professor_detail.migrate.inc
 files[] = faculty_migrate_professor_image.migrate.inc
