@@ -46,7 +46,7 @@ class MigrateFacultyDeptpedMigration extends Migration {
 
 		// Destination - Source mapping.
         $this->addFieldMapping('name', 'lib_fr');
-        $this->addFieldMapping('field_code', FACULTY_MIGRATE_DEPTPED_SOURCE_ID);
+        $this->addFieldMapping('field_code', 'lib_fr');
 
 	}
 
