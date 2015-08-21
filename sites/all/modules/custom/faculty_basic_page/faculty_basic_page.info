@@ -48,6 +48,5 @@ features[variable][] = menu_parent_page
 features[variable][] = node_options_page
 features[variable][] = node_preview_page
 features[variable][] = node_submitted_page
-features[views_view][] = home
-features[views_view][] = home_blocks
+files[] = faculty_basic_page.views_export.inc
 project path = sites/all/modules/custom

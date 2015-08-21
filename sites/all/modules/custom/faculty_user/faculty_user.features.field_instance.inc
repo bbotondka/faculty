@@ -10,6 +10,42 @@
 function faculty_user_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'profile2-professor-field_cv'
+  $field_instances['profile2-professor-field_cv'] = array(
+    'bundle' => 'professor',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_cv',
+    'label' => 'CV',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'pdf',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'profile2-professor-field_degree'
   $field_instances['profile2-professor-field_degree'] = array(
     'bundle' => 'professor',
@@ -41,6 +77,74 @@ function faculty_user_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-professor-field_firstname'
+  $field_instances['profile2-professor-field_firstname'] = array(
+    'bundle' => 'professor',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_firstname',
+    'label' => 'Firstname',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-professor-field_lastname'
+  $field_instances['profile2-professor-field_lastname'] = array(
+    'bundle' => 'professor',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_lastname',
+    'label' => 'Lastname',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 6,
     ),
   );
 
@@ -84,44 +188,8 @@ function faculty_user_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'profile2-professor_detail-field_cv'
-  $field_instances['profile2-professor_detail-field_cv'] = array(
-    'bundle' => 'professor_detail',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'file',
-        'settings' => array(),
-        'type' => 'file_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_cv',
-    'label' => 'CV',
-    'required' => 0,
-    'settings' => array(
-      'description_field' => 0,
-      'file_directory' => '',
-      'file_extensions' => 'pdf',
-      'max_filesize' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'file',
-      'settings' => array(
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'file_generic',
-      'weight' => 4,
-    ),
-  );
-
-  // Exported field_instance: 'profile2-professor_detail-field_other_entry'
-  $field_instances['profile2-professor_detail-field_other_entry'] = array(
+  // Exported field_instance: 'profile2-professor_detail-field_deptped_ref'
+  $field_instances['profile2-professor_detail-field_deptped_ref'] = array(
     'bundle' => 'professor_detail',
     'default_value' => NULL,
     'deleted' => 0,
@@ -129,28 +197,28 @@ function faculty_user_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 2,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'profile2',
-    'field_name' => 'field_other_entry',
-    'label' => 'Other entry',
+    'field_name' => 'field_deptped_ref',
+    'label' => 'Département pédagogique ref',
     'required' => 0,
     'settings' => array(
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 1,
-      'module' => 'text',
+      'active' => 0,
+      'module' => 'taxonomy',
       'settings' => array(
+        'autocomplete_path' => 'taxonomy/autocomplete',
         'size' => 60,
       ),
-      'type' => 'text_textfield',
-      'weight' => 3,
+      'type' => 'taxonomy_autocomplete',
+      'weight' => 5,
     ),
   );
 
@@ -198,7 +266,9 @@ function faculty_user_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('CV');
   t('Degree');
-  t('Other entry');
+  t('Département pédagogique ref');
+  t('Firstname');
+  t('Lastname');
   t('Professor id');
 
   return $field_instances;
