@@ -93,10 +93,10 @@ function faculty_basic_page_strongarm() {
           'weight' => '0',
         ),
         'language' => array(
-          'weight' => '8',
+          'weight' => '9',
         ),
         'path' => array(
-          'weight' => '9',
+          'weight' => '10',
         ),
       ),
       'display' => array(
