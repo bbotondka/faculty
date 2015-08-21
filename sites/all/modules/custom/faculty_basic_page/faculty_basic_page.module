@@ -5,3 +5,7 @@
  */
 
 include_once 'faculty_basic_page.features.inc';
+// Fix bug with overriden status of views.
+include_once 'faculty_basic_page.views_export.inc';
+
+
