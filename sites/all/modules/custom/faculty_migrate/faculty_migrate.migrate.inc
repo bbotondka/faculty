@@ -21,6 +21,13 @@ function faculty_migrate_migrate_api() {
               'class_name' => 'MigrateFacultyCategoryMigration',
               'group_name' => 'faculty',
             ),
+            'FacultyTerm' => array(
+              'class_name' => 'MigrateFacultyTermMigration',
+              'group_name' => 'faculty',
+              'dependencies' => array(
+                'FacultyCategory',
+              ),
+            ),
             'FacultyDeptped' => array(
               'class_name' => 'MigrateFacultyDeptpedMigration',
               'group_name' => 'faculty',
