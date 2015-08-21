@@ -12,11 +12,11 @@ function faculty_menulink_default_fe_block_settings() {
 
   $export['version'] = '2.0';
 
-  $export['megamenu-main-menu'] = array(
+  $export['tb_megamenu-main-menu'] = array(
     'cache' => -1,
     'custom' => 0,
     'delta' => 'main-menu',
-    'module' => 'megamenu',
+    'module' => 'tb_megamenu',
     'node_types' => array(),
     'pages' => '',
     'roles' => array(),
