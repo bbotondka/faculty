@@ -12,11 +12,11 @@ function faculty_menulink_default_fe_block_settings() {
 
   $export['version'] = '2.0';
 
-  $export['tb_megamenu-main-menu'] = array(
+  $export['megamenu-main-menu'] = array(
     'cache' => -1,
     'custom' => 0,
     'delta' => 'main-menu',
-    'module' => 'tb_megamenu',
+    'module' => 'megamenu',
     'node_types' => array(),
     'pages' => '',
     'roles' => array(),
@@ -28,10 +28,10 @@ function faculty_menulink_default_fe_block_settings() {
         'weight' => 0,
       ),
       'faculty' => array(
-        'region' => 'header',
+        'region' => 'content',
         'status' => 1,
         'theme' => 'faculty',
-        'weight' => 0,
+        'weight' => -24,
       ),
       'seven' => array(
         'region' => '',
@@ -40,7 +40,7 @@ function faculty_menulink_default_fe_block_settings() {
         'weight' => 0,
       ),
     ),
-    'title' => '<none>',
+    'title' => '',
     'visibility' => 0,
   );
 

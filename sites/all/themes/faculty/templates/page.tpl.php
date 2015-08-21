@@ -28,7 +28,7 @@
             <div class="col-1-4 no-lr-padding">
                 <?php print render($page['header']); ?>
             </div>
-            <div class="nav-container">
+            <!--div class="nav-container">
                 <?php if ($main_menu): ?>
                     <nav>
                         <?php
@@ -43,7 +43,7 @@
                         ?>
                     </nav>
                 <?php endif; ?>
-            </div>
+            </div-->
         </div>
     </header>
     <div>
