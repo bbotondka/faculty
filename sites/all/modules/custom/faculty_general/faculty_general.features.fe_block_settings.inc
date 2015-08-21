@@ -159,7 +159,7 @@ function faculty_general_default_fe_block_settings() {
         'region' => 'header',
         'status' => 1,
         'theme' => 'faculty',
-        'weight' => -15,
+        'weight' => -23,
       ),
       'seven' => array(
         'region' => '',
@@ -223,7 +223,7 @@ function faculty_general_default_fe_block_settings() {
         'region' => 'header',
         'status' => 1,
         'theme' => 'faculty',
-        'weight' => -16,
+        'weight' => -24,
       ),
       'seven' => array(
         'region' => '',
@@ -351,7 +351,7 @@ function faculty_general_default_fe_block_settings() {
         'region' => 'header',
         'status' => 1,
         'theme' => 'faculty',
-        'weight' => -14,
+        'weight' => -22,
       ),
       'seven' => array(
         'region' => 'dashboard_sidebar',
