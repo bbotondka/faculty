@@ -124,7 +124,14 @@ header {
             }
             .tb-megamenu-submenu {
                 background: transparent;
+                border: 0;
+                box-shadow: none;
                 .row-fluid {
+                    .span6 {
+                        width: 50%;
+                        padding: 0;
+                        margin: 0;
+                    }
                     .mega-inner {
                         padding: 0;
                         .tb-megamenu-item.level-2 .tb-megamenu-submenu {
@@ -135,6 +142,9 @@ header {
                         }
                         .tb-megamenu-item.level-2.open .tb-megamenu-submenu {
                             display: block;
+                            .tb-megamenu-column {
+                                padding-right: 0;
+                            }
                         }
                         a {
                             background: #25304f!important;
