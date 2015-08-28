@@ -19,7 +19,7 @@
 /**
  * Implements hook_views_default_views().
  */
-function faculty_basic_page_views_default_views() {
+function _faculty_basic_page_views_default_views() {
 	$export = array();
 
 	// Home content views.

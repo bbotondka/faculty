@@ -1,4 +1,4 @@
-<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+<article id="node-<?php print $node->nid; ?>" class="TEASER DISPLAY TEST CLASS<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
     <?php
     // @Todo: Create custom template to render header of page.

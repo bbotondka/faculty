@@ -52,6 +52,8 @@ function faculty_preprocess_node(&$vars) {
 	array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['node']->type . '__' . $vars['view_mode']);
 	// Add node--[nid]--[view_mode].tpl.php.
 	array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['node']->nid . '__' . $vars['view_mode']);
+	// Add node--[view_mode].tpl.php.
+	array_unshift($vars['theme_hook_suggestions'], 'node__' . $vars['view_mode']);
 }
 
 /**
