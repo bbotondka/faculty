@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ *  Drupal 7 uses .install files to create database tables and fields, and to
+ * insert data. Drupal 7 .install files can also provide updates to change the
+ * database structure and content.
+ */
+
+/**
+ * Revert 'faculty_video' feature.
+ */
+function faculty_general_update_7001() {
+  features_revert_module('faculty_video');
+}
+
+/**
+ * Revert 'faculty_general' feature.
+ */
+function faculty_general_update_7002() {
+  features_revert_module('faculty_general');
+}
+

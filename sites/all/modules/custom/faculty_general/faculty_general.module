@@ -359,3 +359,14 @@ function _faculty_general_is_tablet() {
 	// Default result.
 	return FALSE;
 }
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function faculty_general_entity_info_alter(&$entity_info) {
+	$entity_info['node']['view modes']['embedded_display'] = array(
+		'label' => t('Embedded display'),
+		'custom settings' => TRUE,
+	);
+}
+

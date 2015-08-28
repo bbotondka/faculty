@@ -74,7 +74,18 @@ function faculty_video_strongarm() {
           'weight' => '0',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'language' => array(
+          'teaser' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+          'embedded_display' => array(
+            'weight' => '5',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__video'] = $strongarm;
@@ -123,7 +134,7 @@ function faculty_video_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_submitted_video';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['node_submitted_video'] = $strongarm;
 
   return $export;
