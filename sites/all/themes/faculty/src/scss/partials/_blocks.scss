@@ -5,6 +5,9 @@
     .block-menu {
         float: left;
         margin: 5px 0 0;
+        @include bp(tablet) {
+            display: none;
+        }
         .menu {
             padding: 0;
             float: left;
@@ -39,6 +42,9 @@
     }
     .block-locale {
         float: right;
+        @include bp(tablet) {
+            display: none;
+        }
         .language-switcher-locale-url {
             float: left;
             padding: 0;
@@ -76,6 +82,9 @@
         max-width: 275px;
         height: 40px;
         position: relative;
+        @include bp(tablet) {
+            display: none;
+        }
         .form-type-textfield input {
             border: 0;
             float: right;
@@ -99,12 +108,28 @@
     .block-tb-megamenu {
         float: right;
         width: 100%;
+        .tb-megamenu-button{
+            background: url('../images/burger-menu.png') no-repeat 50% 50% #25304f;
+            border: 0;
+            height: 50px;
+            width: 60px;
+            top: -50px;
+            position: absolute;
+            border-radius: 0px 0px 0px 0px;
+            -moz-border-radius: 0px 0px 0px 0px;
+            -webkit-border-radius: 0px 0px 0px 0px;
+            border: 0px solid #000000;
+        }
         .tb-megamenu {
             background: transparent;
             .nav-collapse {
                 float: right;
                 height: 45px;
                 margin: 13px 0 0;
+                @include bp(tablet) {
+                    margin: 0;
+                    top: 15px;
+                }
             }
         }
 
@@ -123,9 +148,9 @@
     @include bp(tablet) {
         padding: 0;
     }
-    .container {
+    .content {
         position: relative;
-        .article-block-0 {
+        .views-row-1 {
             width: 730px;
             height: 493px;
             @include bp(tablet) {
@@ -133,25 +158,59 @@
                 height: 190px;
             }
         }
-        .article-block-1, .article-block-2 {
-            width: 350px;
-            height: 237px;
-            position: absolute!important;
-            right: 0;
-            top: 0;
-            @include bp(tablet) {
-                position: relative!important;
-                width: 100%;
-                height: 190px;
-            }
-        }
-        .article-block-2 {
-            top: auto;
-            bottom: 0;
-        }
-        .article-block {
+        .views-row {
             position: relative;
             overflow: hidden;
+            .details-bg {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 0 25px 25px 25px;
+                background: url('../images/article-gradient.png') repeat-x 0 0 transparent;
+                min-height: 140px;
+                @include bp(tablet) {
+                    /*background-size: contain;*/
+                    min-height: 50%;
+                }
+            }
+            .views-field-field-mobile-image {
+                display: none;
+                @include bp(tablet) {
+                    display: inline-block;
+                }
+            }
+            .views-field-field-tags {
+                position: absolute;
+                bottom: 100px;
+                left: 25px;
+                right: 25px;
+                z-index: 100;
+                a {
+                    color: #c0c0c0;
+                    font-weight: 500;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    font-size: 19px;
+                    margin: 0;
+                }
+            }
+            .views-field-title {
+                position: absolute;
+                bottom: 25px;
+                left: 25px;
+                right: 25px;
+                height: 80px;
+                z-index: 100;
+                a {
+                    float: left;
+                    color: #ffffff;
+                    font-size: 32px;
+                    text-decoration: none;
+                    font-weight: bold;
+                    margin: 0;
+                }
+            }
             .details {
                 position: absolute;
                 bottom: 0;
@@ -183,6 +242,59 @@
                 width: 100%;
                 height: auto;
             }
+        }
+        .views-row-2, .views-row-3 {
+            width: 350px;
+            height: 237px;
+            position: absolute!important;
+            right: 0;
+            top: 0;
+            @include bp(tablet) {
+                position: relative!important;
+                width: 100%;
+                height: 190px;
+            }
+            .details-bg {
+                @include bp(tablet) {
+                    /*background-size: contain;*/
+                    min-height: 50%;
+                }
+            }
+            .views-field-field-tags {
+                position: absolute;
+                bottom: 75px;
+                left: 25px;
+                right: 25px;
+                z-index: 100;
+                a {
+                    color: #c0c0c0;
+                    font-weight: 500;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    font-size: 9px;
+                    margin: 0;
+                }
+            }
+            .views-field-title {
+                position: absolute;
+                bottom: 20px;
+                left: 25px;
+                right: 25px;
+                height: 55px;
+                z-index: 100;
+                a {
+                    float: left;
+                    color: #ffffff;
+                    font-size: 22px;
+                    text-decoration: none;
+                    font-weight: bold;
+                    margin: 0;
+                }
+            }
+        }
+        .views-row-3 {
+            top: auto;
+            bottom: 0;
         }
     }
 }
