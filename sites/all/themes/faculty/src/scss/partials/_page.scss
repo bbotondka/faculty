@@ -73,21 +73,11 @@ header {
         width: 100%;
         .nav-trigger {
             /*            height: 85px;*/
-            background: #25304f;
+            background: transparent;
             float: left;
             padding: 1em;
             width: 4em;
             height: 3em;
-            .icon-bar {
-                border-radius: 1px;
-                display: block;
-                height: 2px;
-                width: 2em;
-                background: #ffffff;
-            }
-            .icon-bar + .icon-bar {
-                margin-top: 0.4em;
-            }
         }
         #logo-mobile {
             display: inline-block;
@@ -99,8 +89,8 @@ header {
             }
         }
         .extra-trigger {
-            width: 4em;
-            height: 3em;
+            width: 60px;
+            height: 50px;
             float: right;
             background: url('../images/icon-school.png') no-repeat center center #dc1b74;
             background-size: 2em;
@@ -259,6 +249,75 @@ header {
                     }
                 }
             }
+            > .container .field-type-text {
+                float: left;
+                width: 100%;
+                .field-item {
+                    margin: 70px 0 0;
+                    font-size: 32px;
+                    @include bp(tablet) {
+                        margin: 30px 0 0;
+                        padding: 0 35px;
+                    }
+                }
+            }
+
+            > .container .field-type-link-field {
+                float: left;
+                width: 100%;
+                a {
+                    color: #0db9cf;
+                    font-size: 12px;
+                    font-weight: 400;
+                    padding: 0 15px 0 0;
+                    background: url('../images/arrow-next-blue.png') no-repeat 100% 50% transparent;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    letter-spacing: 1px;
+                }
+            }
+            > .container .field-name-field-videos-ref {
+                float: left;
+                background: #f8f8f8;
+                @include bp(tablet) {
+                    width: 100%;
+                    padding: 0 35px;
+                }
+                .field-items {
+                    > .field-item {
+                        width: 31%;
+                        float: left;
+                        margin: 0 1%;
+                        @include bp(tablet) {
+                            width: 100%;
+                        }
+                        .field-item {
+                            width: 100%;
+                        }
+                        h1 {
+                            margin: 0;
+                            a {
+                                font-size: 24px;
+                                color: #25304f;
+                                text-decoration: none;
+                                text-transform: uppercase;
+                            }
+                        }
+                        .field-name-field-subtitle .field-item {
+                            text-transform: uppercase;
+                            color: #959595;
+                            font-size: 15px;
+                            margin: 0 0 10px;
+                            width: 100%;
+                            padding: 0;
+                        }
+                        img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    }
+                }
+            }
             > .container .field-name-body {
                 float: left;
                 @include bp(tablet) {
@@ -271,6 +330,10 @@ header {
                 }
             }
         }
+    }
+    #block-views-home-blocks-block-1 {
+        max-width: $pageWidth;
+        margin: 20px auto;
     }
 }
 
@@ -491,21 +554,6 @@ PAGE TEMPLATES
                 font-size: 16px;
                 line-height: 24px;
                 font-weight: 300;
-            }
-        }
-        .links {
-            li {
-                padding: 0;
-                a {
-                    color: #0db9cf;
-                    font-size: 12px;
-                    font-weight: 400;
-                    padding: 0 15px 0 0;
-                    background: url('../images/arrow-next-blue.png') no-repeat 100% 50% transparent;
-                    text-transform: uppercase;
-                    text-decoration: none;
-                    letter-spacing: 1px;
-                }
             }
         }
     }
