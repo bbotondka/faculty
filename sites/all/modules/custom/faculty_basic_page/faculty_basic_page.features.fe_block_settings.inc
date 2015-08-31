@@ -92,8 +92,8 @@ function faculty_basic_page_default_fe_block_settings() {
         'weight' => 0,
       ),
       'faculty' => array(
-        'region' => 'middle_grey_content',
-        'status' => 1,
+        'region' => '',
+        'status' => 0,
         'theme' => 'faculty',
         'weight' => 0,
       ),
