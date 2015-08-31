@@ -21,10 +21,8 @@ function faculty_general_update_7002() {
 }
 
 /**
- * Revert 'faculty_general' feature.
+ * Revert 'faculty_basic_page' feature.
  */
 function faculty_general_update_7003() {
   features_revert_module('faculty_basic_page');
 }
-
-
