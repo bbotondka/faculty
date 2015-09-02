@@ -282,11 +282,15 @@ header {
             > .container .field-name-field-videos-ref {
                 float: left;
                 background: #f8f8f8;
+                margin: 50px 0 0;
+                width: 100%;
                 @include bp(tablet) {
                     width: 100%;
                     padding: 0 35px;
                 }
                 .field-items {
+                    width: 100%;
+                    float: left;
                     > .field-item {
                         width: 31%;
                         float: left;
@@ -323,6 +327,21 @@ header {
                             position: relative;
                             width: 100%;
                             float: left;
+                            .field-name-field-mobile-image {
+                                display: none;
+                            }
+                            .field-name-field-image {
+                                display: block;
+                            }
+                            @include bp(tablet) {
+                                .field-name-field-mobile-image {
+                                    display: block;
+                                }
+                                .field-name-field-image {
+                                    display: none;
+                                }
+                            }
+
                             .btn-primary {
                                 background: url('../images/play-video.png') no-repeat 0 0 transparent;
                                 width: 73px;
