@@ -6,13 +6,13 @@
     <div class="video-thumb">
         <?php print render($content['field_image']); ?>
         <?php print render($content['field_mobile_image']); ?>
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"></button>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal<?php print ($node->nid); ?>"></button>
     </div>
     <div class="video-more">
         <?php print render($content['field_link']); ?>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal<?php print ($node->nid); ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">

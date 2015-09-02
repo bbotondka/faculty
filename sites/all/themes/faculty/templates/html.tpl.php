@@ -9,7 +9,9 @@
 	<link rel="shortcut icon" href="<?php print $directory; ?>/build/images/favicon.ico">
 	<link rel="apple-touch-icon" href="<?php print $directory; ?>/build/images/apple-touch-icon.png">
 	<?php print $styles; ?>
+        <link type="text/css" rel="stylesheet" href="<?php print base_path() . path_to_theme();?>/library/bootstrap/css/bootstrap.min.css" media="all" />
 	<?php print $scripts; ?>
+        <script type="text/javascript" src="<?php print base_path() . path_to_theme();?>/library/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 	<!--[if lt IE 8]>
