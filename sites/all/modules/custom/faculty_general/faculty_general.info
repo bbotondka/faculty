@@ -55,6 +55,7 @@ features[field_base][] = field_professor_id
 features[field_base][] = field_publication_ref
 features[field_base][] = field_reference
 features[field_base][] = field_section
+features[field_base][] = field_section_desc
 features[field_base][] = field_section_option
 features[field_base][] = field_section_title
 features[field_base][] = field_size

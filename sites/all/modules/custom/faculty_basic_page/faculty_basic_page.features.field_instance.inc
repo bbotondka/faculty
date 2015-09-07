@@ -50,7 +50,7 @@ function faculty_basic_page_field_default_field_instances() {
     'bundle' => 'field_bloc',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Admin description only. You have to use content section to add contents.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -210,7 +210,7 @@ function faculty_basic_page_field_default_field_instances() {
     'bundle' => 'field_bloc',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'By default, we use width of 100%',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -352,6 +352,41 @@ function faculty_basic_page_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'field_collection_item-field_section-field_section_desc'
+  $field_instances['field_collection_item-field_section-field_section_desc'] = array(
+    'bundle' => 'field_section',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_section_desc',
+    'label' => 'Section description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance:
   // 'field_collection_item-field_section-field_section_option'
   $field_instances['field_collection_item-field_section-field_section_option'] = array(
     'bundle' => 'field_section',
@@ -364,12 +399,12 @@ function faculty_basic_page_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 1,
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'field_collection_item',
     'field_name' => 'field_section_option',
-    'label' => 'Section option',
+    'label' => 'Section options',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -379,7 +414,7 @@ function faculty_basic_page_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 1,
+      'weight' => 2,
     ),
   );
 
@@ -741,7 +776,7 @@ function faculty_basic_page_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_section',
-    'label' => 'Section',
+    'label' => 'Sections builder',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -881,9 +916,11 @@ function faculty_basic_page_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Admin description only. You have to use content section to add contents.');
   t('Appear on home page.');
   t('Bloc');
   t('Body');
+  t('By default, we use width of 100%');
   t('Content');
   t('Description');
   t('Figure label');
@@ -892,9 +929,10 @@ function faculty_basic_page_field_default_field_instances() {
   t('Link');
   t('Mobile image');
   t('Reference');
-  t('Section');
-  t('Section option');
+  t('Section description');
+  t('Section options');
   t('Section title');
+  t('Sections builder');
   t('Size');
   t('Some figures');
   t('Subtitle');
