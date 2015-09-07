@@ -7,7 +7,6 @@ dependencies[] = ctools
 dependencies[] = faculty_general
 dependencies[] = features
 dependencies[] = image
-dependencies[] = node
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text

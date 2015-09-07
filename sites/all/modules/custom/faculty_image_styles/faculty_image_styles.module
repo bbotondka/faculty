@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Faculty Image styles feature.
+ */
+
+include_once 'faculty_image_styles.features.inc';

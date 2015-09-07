@@ -580,6 +580,27 @@ function faculty_general_field_default_field_bases() {
     'type' => 'field_collection',
   );
 
+  // Exported field_base: 'field_section_desc'
+  $field_bases['field_section_desc'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_section_desc',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_section_option'
   $field_bases['field_section_option'] = array(
     'active' => 1,
@@ -596,14 +617,14 @@ function faculty_general_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        1 => 'Option 1',
-        2 => 'Option 2',
+        'grey_bg' => 'Grey background (if unchecked, background color is white)',
+        'accordion' => 'Enable accordion effect',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
     ),
     'translatable' => 0,
-    'type' => 'list_integer',
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_section_title'
@@ -644,8 +665,9 @@ function faculty_general_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        1 => 'Size 1',
-        2 => 'Size 2',
+        33 => 'Col 33',
+        50 => 'Col 50',
+        67 => 'Col 67',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,

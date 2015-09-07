@@ -21,7 +21,7 @@ function faculty_basic_page_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Blocs',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_bloc',
     ),
@@ -136,6 +136,7 @@ function faculty_basic_page_field_group_info() {
     'weight' => '5',
     'children' => array(
       0 => 'field_reference',
+      1 => 'field_link',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
