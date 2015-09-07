@@ -750,6 +750,12 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'field_collection_view',
         'weight' => 8,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),

@@ -38,7 +38,7 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
   $handler->display->display_options['row_options']['links'] = FALSE;
-  /* Field: Field: Image */
+  /* Champ: Champ : Image */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -51,7 +51,7 @@ function faculty_basic_page_views_default_views() {
     'image_style' => 'thumbnail',
     'image_link' => '',
   );
-  /* Field: Field: Mobile image */
+  /* Champ: Champ : Mobile image */
   $handler->display->display_options['fields']['field_mobile_image']['id'] = 'field_mobile_image';
   $handler->display->display_options['fields']['field_mobile_image']['table'] = 'field_data_field_mobile_image';
   $handler->display->display_options['fields']['field_mobile_image']['field'] = 'field_mobile_image';
@@ -64,14 +64,14 @@ function faculty_basic_page_views_default_views() {
     'image_style' => 'thumbnail',
     'image_link' => '',
   );
-  /* Field: Content: Title */
+  /* Champ: Contenu : Titre */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Body */
+  /* Champ: Contenu : Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
@@ -81,24 +81,24 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['body']['settings'] = array(
     'trim_length' => '600',
   );
-  /* Field: Content: Link */
+  /* Champ: Contenu : Link */
   $handler->display->display_options['fields']['field_link']['id'] = 'field_link';
   $handler->display->display_options['fields']['field_link']['table'] = 'field_data_field_link';
   $handler->display->display_options['fields']['field_link']['field'] = 'field_link';
   $handler->display->display_options['fields']['field_link']['label'] = '';
   $handler->display->display_options['fields']['field_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_link']['click_sort_column'] = 'url';
-  /* Sort criterion: Content: Sticky */
+  /* Critère de tri: Contenu : Épinglé (en haut des listes) */
   $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['table'] = 'node';
   $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
-  /* Sort criterion: Content: Post date */
+  /* Critère de tri: Contenu : Date de publication */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Language */
+  /* Critère de filtrage: Contenu : Langue */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
@@ -106,21 +106,21 @@ function faculty_basic_page_views_default_views() {
     '***CURRENT_LANGUAGE***' => '***CURRENT_LANGUAGE***',
   );
   $handler->display->display_options['filters']['language']['group'] = 1;
-  /* Filter criterion: Content: Promoted to front page */
+  /* Critère de filtrage: Contenu : Promu en page d'accueil */
   $handler->display->display_options['filters']['promote']['id'] = 'promote';
   $handler->display->display_options['filters']['promote']['table'] = 'node';
   $handler->display->display_options['filters']['promote']['field'] = 'promote';
   $handler->display->display_options['filters']['promote']['value'] = '1';
   $handler->display->display_options['filters']['promote']['group'] = 1;
   $handler->display->display_options['filters']['promote']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Critère de filtrage: Contenu : Publié */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Critère de filtrage: Contenu : Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -141,7 +141,6 @@ function faculty_basic_page_views_default_views() {
     t('Asc'),
     t('Desc'),
     t('Page'),
-    t('more'),
   );
   $export['home'] = $view;
 
@@ -176,7 +175,7 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Content: Some figures */
+  /* Champ: Contenu : Some figures */
   $handler->display->display_options['fields']['field_some_figures']['id'] = 'field_some_figures';
   $handler->display->display_options['fields']['field_some_figures']['table'] = 'field_data_field_some_figures';
   $handler->display->display_options['fields']['field_some_figures']['field'] = 'field_some_figures';
@@ -191,31 +190,31 @@ function faculty_basic_page_views_default_views() {
   );
   $handler->display->display_options['fields']['field_some_figures']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_some_figures']['multi_type'] = 'ul';
-  /* Sort criterion: Content: Post date */
+  /* Critère de tri: Contenu : Date de publication */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Published */
+  /* Critère de filtrage: Contenu : Publié */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Critère de filtrage: Contenu : Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'page' => 'page',
   );
-  /* Filter criterion: Content: Promoted to front page */
+  /* Critère de filtrage: Contenu : Promu en page d'accueil */
   $handler->display->display_options['filters']['promote']['id'] = 'promote';
   $handler->display->display_options['filters']['promote']['table'] = 'node';
   $handler->display->display_options['filters']['promote']['field'] = 'promote';
   $handler->display->display_options['filters']['promote']['value'] = '1';
-  /* Filter criterion: Content: Language */
+  /* Critère de filtrage: Contenu : Langue */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
@@ -238,21 +237,20 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '3';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
+  /* Champ: Contenu : Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Field: Content: Title */
+  /* Champ: Contenu : Titre */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Gig image */
+  /* Champ: Gig image */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -260,13 +258,11 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['field_image']['label'] = '';
   $handler->display->display_options['fields']['field_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_image']['type'] = 'image_url';
   $handler->display->display_options['fields']['field_image']['settings'] = array(
-    'url_type' => '0',
     'image_style' => '',
     'image_link' => '',
   );
-  /* Field: Medium image */
+  /* Champ: Medium image */
   $handler->display->display_options['fields']['field_image_1']['id'] = 'field_image_1';
   $handler->display->display_options['fields']['field_image_1']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image_1']['field'] = 'field_image';
@@ -274,13 +270,11 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['field_image_1']['label'] = '';
   $handler->display->display_options['fields']['field_image_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_image_1']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_image_1']['type'] = 'image_url';
   $handler->display->display_options['fields']['field_image_1']['settings'] = array(
-    'url_type' => '0',
     'image_style' => 'thumbnail',
     'image_link' => '',
   );
-  /* Field: Field: Mobile image */
+  /* Champ: Champ : Mobile image */
   $handler->display->display_options['fields']['field_mobile_image']['id'] = 'field_mobile_image';
   $handler->display->display_options['fields']['field_mobile_image']['table'] = 'field_data_field_mobile_image';
   $handler->display->display_options['fields']['field_mobile_image']['field'] = 'field_mobile_image';
@@ -291,7 +285,7 @@ function faculty_basic_page_views_default_views() {
     'image_style' => '',
     'image_link' => '',
   );
-  /* Field: Global: Custom text */
+  /* Champ: Global : Texte personnalisé */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -301,34 +295,41 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'node/[nid]';
   $handler->display->display_options['fields']['nothing']['alter']['absolute'] = TRUE;
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Champ: Contenu : Tags */
+  $handler->display->display_options['fields']['field_tags']['id'] = 'field_tags';
+  $handler->display->display_options['fields']['field_tags']['table'] = 'field_data_field_tags';
+  $handler->display->display_options['fields']['field_tags']['field'] = 'field_tags';
+  $handler->display->display_options['fields']['field_tags']['label'] = '';
+  $handler->display->display_options['fields']['field_tags']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_tags']['delta_offset'] = '0';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Content: Sticky */
+  /* Critère de tri: Contenu : Épinglé (en haut des listes) */
   $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['table'] = 'node';
   $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
-  /* Sort criterion: Content: Post date */
+  /* Critère de tri: Contenu : Date de publication */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Critère de filtrage: Contenu : Publié */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Critère de filtrage: Contenu : Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'article' => 'article',
   );
-  /* Filter criterion: Content: Language */
+  /* Critère de filtrage: Contenu : Langue */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
@@ -346,13 +347,13 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Entity Reference: Referenced Entity */
+  /* Relation: Entity Reference : Entité référencée */
   $handler->display->display_options['relationships']['field_videos_ref_target_id']['id'] = 'field_videos_ref_target_id';
   $handler->display->display_options['relationships']['field_videos_ref_target_id']['table'] = 'field_data_field_videos_ref';
   $handler->display->display_options['relationships']['field_videos_ref_target_id']['field'] = 'field_videos_ref_target_id';
   $handler->display->display_options['relationships']['field_videos_ref_target_id']['required'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
+  /* Champ: Contenu : Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -360,7 +361,7 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Field: Content: Title */
+  /* Champ: Contenu : Titre */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -368,14 +369,14 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Subtitle */
+  /* Champ: Contenu : Subtitle */
   $handler->display->display_options['fields']['field_subtitle']['id'] = 'field_subtitle';
   $handler->display->display_options['fields']['field_subtitle']['table'] = 'field_data_field_subtitle';
   $handler->display->display_options['fields']['field_subtitle']['field'] = 'field_subtitle';
   $handler->display->display_options['fields']['field_subtitle']['relationship'] = 'field_videos_ref_target_id';
   $handler->display->display_options['fields']['field_subtitle']['label'] = '';
   $handler->display->display_options['fields']['field_subtitle']['element_label_colon'] = FALSE;
-  /* Field: Global: Custom text */
+  /* Champ: Global : Texte personnalisé */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -385,7 +386,7 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'node/[nid]';
   $handler->display->display_options['fields']['nothing']['alter']['absolute'] = TRUE;
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  /* Field: Field: Image */
+  /* Champ: Champ : Image */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -399,7 +400,7 @@ function faculty_basic_page_views_default_views() {
     'image_style' => 'thumbnail',
     'image_link' => '',
   );
-  /* Field: Field: Mobile image */
+  /* Champ: Champ : Mobile image */
   $handler->display->display_options['fields']['field_mobile_image']['id'] = 'field_mobile_image';
   $handler->display->display_options['fields']['field_mobile_image']['table'] = 'field_data_field_mobile_image';
   $handler->display->display_options['fields']['field_mobile_image']['field'] = 'field_mobile_image';
@@ -412,7 +413,7 @@ function faculty_basic_page_views_default_views() {
     'image_style' => 'thumbnail',
     'image_link' => '',
   );
-  /* Field: Content: Link */
+  /* Champ: Contenu : Link */
   $handler->display->display_options['fields']['field_link']['id'] = 'field_link';
   $handler->display->display_options['fields']['field_link']['table'] = 'field_data_field_link';
   $handler->display->display_options['fields']['field_link']['field'] = 'field_link';
@@ -420,7 +421,7 @@ function faculty_basic_page_views_default_views() {
   $handler->display->display_options['fields']['field_link']['label'] = '';
   $handler->display->display_options['fields']['field_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_link']['click_sort_column'] = 'url';
-  /* Field: Field: Youtube */
+  /* Champ: Champ : Youtube */
   $handler->display->display_options['fields']['field_youtube']['id'] = 'field_youtube';
   $handler->display->display_options['fields']['field_youtube']['table'] = 'field_data_field_youtube';
   $handler->display->display_options['fields']['field_youtube']['field'] = 'field_youtube';
@@ -435,28 +436,28 @@ function faculty_basic_page_views_default_views() {
   );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Critère de filtrage: Contenu : Publié */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Critère de filtrage: Contenu : Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'page' => 'page',
   );
-  /* Filter criterion: Content: Language */
+  /* Critère de filtrage: Contenu : Langue */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
   $handler->display->display_options['filters']['language']['value'] = array(
     '***CURRENT_LANGUAGE***' => '***CURRENT_LANGUAGE***',
   );
-  /* Filter criterion: Content: Promoted to front page */
+  /* Critère de filtrage: Contenu : Promu en page d'accueil */
   $handler->display->display_options['filters']['promote']['id'] = 'promote';
   $handler->display->display_options['filters']['promote']['table'] = 'node';
   $handler->display->display_options['filters']['promote']['field'] = 'promote';
@@ -472,13 +473,12 @@ function faculty_basic_page_views_default_views() {
     t('Asc'),
     t('Desc'),
     t('Some figures block'),
-    t('more'),
     t('News'),
     t('news (article)'),
     t('node/[nid]'),
     t('Videos'),
     t('Videos block'),
-    t('Content entity referenced from field_videos_ref'),
+    t('Entité Contenu réferencée par field_videos_ref'),
   );
   $export['home_blocks'] = $view;
 

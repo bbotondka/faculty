@@ -24,6 +24,12 @@ function faculty_article_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 2,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -68,6 +74,12 @@ function faculty_article_field_default_field_instances() {
           'image_style' => 'large',
         ),
         'type' => 'image',
+        'weight' => 0,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
       'teaser' => array(
@@ -123,6 +135,12 @@ function faculty_article_field_default_field_instances() {
         'type' => 'image',
         'weight' => 1,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'image',
@@ -174,6 +192,12 @@ function faculty_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
         'weight' => 3,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',

@@ -24,6 +24,12 @@ function faculty_publication_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -70,6 +76,12 @@ function faculty_publication_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 3,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -111,6 +123,12 @@ function faculty_publication_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 1,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -150,6 +168,12 @@ function faculty_publication_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 4,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -193,6 +217,12 @@ function faculty_publication_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 2,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -228,6 +258,12 @@ function faculty_publication_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
+        'weight' => 0,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
       'teaser' => array(
@@ -276,6 +312,12 @@ function faculty_publication_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 3,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -317,6 +359,12 @@ function faculty_publication_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 1,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -356,6 +404,12 @@ function faculty_publication_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 4,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -398,6 +452,12 @@ function faculty_publication_field_default_field_instances() {
         ),
         'type' => 'entityreference_label',
         'weight' => 2,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
