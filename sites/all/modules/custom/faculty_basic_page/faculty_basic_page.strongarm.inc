@@ -80,6 +80,9 @@ function faculty_basic_page_strongarm() {
       'search_result' => array(
         'custom_settings' => FALSE,
       ),
+      'embedded_display' => array(
+        'custom_settings' => FALSE,
+      ),
       'diff_standard' => array(
         'custom_settings' => FALSE,
       ),
@@ -93,20 +96,17 @@ function faculty_basic_page_strongarm() {
           'weight' => '0',
         ),
         'language' => array(
-          'weight' => '9',
-        ),
-        'path' => array(
-          'weight' => '10',
+          'weight' => '6',
         ),
       ),
       'display' => array(
         'language' => array(
           'default' => array(
-            'weight' => '6',
+            'weight' => '3',
             'visible' => FALSE,
           ),
           'teaser' => array(
-            'weight' => '6',
+            'weight' => '3',
             'visible' => FALSE,
           ),
         ),

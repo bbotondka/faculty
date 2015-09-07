@@ -1,0 +1,10 @@
+name = Faculty Image styles
+description = Images styles for all pictures on the site
+core = 7.x
+package = Faculty
+version = 7.x-1.0
+dependencies[] = image
+features[features_api][] = api:2
+features[image][] = desktop_320x215
+features[image][] = desktop_730x495
+features[image][] = mobile_350x235

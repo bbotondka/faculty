@@ -8,7 +8,6 @@ dependencies[] = faculty_general
 dependencies[] = features
 dependencies[] = image
 dependencies[] = link
-dependencies[] = node
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = youtube

@@ -35,3 +35,14 @@ function faculty_general_update_7004() {
   module_enable($modules);
 }
 
+/**
+ * Enable faculty_image_styles module + revert some features.
+ */
+function faculty_general_update_7005() {
+ $modules = array('faculty_basic_page', 'faculty_general', 'faculty_video', 'faculty_article');
+ features_revert_module($modules);
+
+ $modules = array('faculty_image_styles');
+ module_enable($modules);
+}
+

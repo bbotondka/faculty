@@ -508,12 +508,6 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 3,
       ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -560,18 +554,12 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'image',
         'weight' => 0,
       ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'image_url_formatter',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'medium',
+          'image_style' => '',
           'url_type' => 0,
         ),
         'type' => 'image_url',
@@ -618,12 +606,6 @@ function faculty_basic_page_field_default_field_instances() {
         'settings' => array(),
         'type' => 'link_default',
         'weight' => 5,
-      ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -685,18 +667,12 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'image',
         'weight' => 1,
       ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'image_url_formatter',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'thumbnail',
+          'image_style' => '',
           'url_type' => 0,
         ),
         'type' => 'image_url',
@@ -792,12 +768,6 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 7,
       ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
       'teaser' => array(
         'label' => 'hidden',
         'settings' => array(),
@@ -834,12 +804,6 @@ function faculty_basic_page_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 2,
-      ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -883,12 +847,6 @@ function faculty_basic_page_field_default_field_instances() {
         ),
         'type' => 'entityreference_label',
         'weight' => 4,
-      ),
-      'embedded_display' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
