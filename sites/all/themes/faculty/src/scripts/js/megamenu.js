@@ -37,13 +37,14 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             Drupal.TBMegaMenu.displayedMenuMobile = true;
           }
         });
-
-        $('.nav-trigger').click(function () {
-            $('.region-header').toggle();
-            $(this).toggleClass('active');
-        })
       });
 
+      $('.nav-trigger').click(function (e) {
+          e.preventDefault();
+          console.log('ouii')
+          $('.region-header').toggle();
+          $(this).toggleClass('active');
+      })
 
       var isTouch = 'ontouchstart' in window && !(/hp-tablet/gi).test(navigator.appVersion);
       if(!isTouch){

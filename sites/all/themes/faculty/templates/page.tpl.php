@@ -25,7 +25,7 @@
             </div>
 
 
-            <div class="no-lr-padding clearfix">
+            <div class="no-lr-padding">
                 <?php print render($page['header']); ?>
             </div>
             <!--div class="nav-container">

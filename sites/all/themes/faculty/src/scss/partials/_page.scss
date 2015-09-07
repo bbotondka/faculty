@@ -38,6 +38,9 @@ h4 { }
 .container {
     max-width: $pageWidth;
     margin: 20px auto;
+    @include bp(tablet) {
+        padding: 0!important;
+    }
 }
 
 /* HEADER */
