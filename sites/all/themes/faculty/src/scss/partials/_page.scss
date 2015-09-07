@@ -72,20 +72,37 @@ header {
 .mobile-menu {
     display: none;
     @include bp(tablet) {
-        display: inline-block;
+        display: block;
         width: 100%;
         .nav-trigger {
             /*            height: 85px;*/
             background: transparent;
             float: left;
-            padding: 1em;
+            padding: 10px 13px;
             width: 4em;
-            height: 3em;
+            height: 50px;
+            background-color: #25304f;
+
+            &.active {
+              background-color: #fff;
+
+              .icon-bar {
+                background-color: #25304f;
+              }
+            }
+
+            .icon-bar {
+              display: block;
+              height: 2px;
+              margin: 6px 0;
+              background-color: #fff;
+            }
         }
         #logo-mobile {
             display: inline-block;
             max-width: 12em;
             text-align: center;
+            line-height: 50px;
             img {
                 max-width: 90%;
                 margin: 0 0 0 5%;
@@ -107,6 +124,12 @@ header {
     float: right;
     text-align: right;
     height: 58px;
+
+    @include bp(tablet) {
+      float: none!important;
+      height: auto!important;
+    }
+
     li {
       a {
         background: #25304f!important;
@@ -371,6 +394,7 @@ header {
     #block-views-home-blocks-block-1 {
         max-width: $pageWidth;
         margin: 20px auto;
+        padding: 0 15px;
     }
 }
 

@@ -2,11 +2,15 @@
 
 .block { }
 .region-header {
+    @include bp(tablet) {
+        display: none;
+    }
     .block-menu {
         float: left;
         margin: 5px 0 0;
         @include bp(tablet) {
-            display: none;
+            float: none;
+            @extend .clearfix;
         }
         .menu {
             padding: 0;
@@ -43,7 +47,8 @@
     .block-locale {
         float: right;
         @include bp(tablet) {
-            display: none;
+            @extend .clearfix;
+            float: none;
         }
         .language-switcher-locale-url {
             float: left;
@@ -83,7 +88,7 @@
         height: 40px;
         position: relative;
         @include bp(tablet) {
-            display: none;
+            float: none;
         }
         .form-type-textfield input {
             border: 0;
@@ -108,17 +113,25 @@
     .block-tb-megamenu {
         float: right;
         width: 100%;
+        @include bp(tablet) {
+            @extend .clearfix;
+            float: none;
+        }
         .tb-megamenu-button{
-            background: url('../images/burger-menu.png') no-repeat 50% 50% #25304f;
+            background: #25304f;
+            display: none;
             border: 0;
-            height: 50px;
-            width: 60px;
+            border-radius: 0;
             top: -50px;
             position: absolute;
-            border-radius: 0px 0px 0px 0px;
-            -moz-border-radius: 0px 0px 0px 0px;
-            -webkit-border-radius: 0px 0px 0px 0px;
-            border: 0px solid #000000;
+
+            i {
+                background: url('../images/burger-menu.png') no-repeat #25304f;
+                height: 33px;
+                width: 34px;
+                border: 0;
+                display: block;
+            }
         }
         .tb-megamenu {
             background: transparent;

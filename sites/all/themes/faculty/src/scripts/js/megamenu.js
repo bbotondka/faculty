@@ -37,6 +37,11 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
             Drupal.TBMegaMenu.displayedMenuMobile = true;
           }
         });
+
+        $('.nav-trigger').click(function () {
+            $('.region-header').toggle();
+            $(this).toggleClass('active');
+        })
       });
 
 
