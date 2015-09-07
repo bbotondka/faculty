@@ -123,6 +123,57 @@ function faculty_basic_page_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'field_collection_item-field_bloc-field_link'
+  $field_instances['field_collection_item-field_bloc-field_link'] = array(
+    'bundle' => 'field_bloc',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_link',
+    'label' => 'Link reference',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 1,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => 'default',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 1,
+      'rel_remove' => 'default',
+      'title' => 'optional',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 1,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance:
   // 'field_collection_item-field_bloc-field_mobile_image'
   $field_instances['field_collection_item-field_bloc-field_mobile_image'] = array(
@@ -187,7 +238,7 @@ function faculty_basic_page_field_default_field_instances() {
     ),
     'entity_type' => 'field_collection_item',
     'field_name' => 'field_reference',
-    'label' => 'Reference',
+    'label' => 'Content reference',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -543,6 +594,12 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 3,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -587,6 +644,12 @@ function faculty_basic_page_field_default_field_instances() {
           'image_style' => '',
         ),
         'type' => 'image',
+        'weight' => 0,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
       'teaser' => array(
@@ -641,6 +704,12 @@ function faculty_basic_page_field_default_field_instances() {
         'settings' => array(),
         'type' => 'link_default',
         'weight' => 5,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -701,6 +770,12 @@ function faculty_basic_page_field_default_field_instances() {
         ),
         'type' => 'image',
         'weight' => 1,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -803,6 +878,12 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 7,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'settings' => array(),
@@ -839,6 +920,12 @@ function faculty_basic_page_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 2,
+      ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -883,6 +970,12 @@ function faculty_basic_page_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 4,
       ),
+      'embedded_display' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'entityreference',
@@ -922,13 +1015,14 @@ function faculty_basic_page_field_default_field_instances() {
   t('Body');
   t('By default, we use width of 100%');
   t('Content');
+  t('Content reference');
   t('Description');
   t('Figure label');
   t('Figure number');
   t('Image');
   t('Link');
+  t('Link reference');
   t('Mobile image');
-  t('Reference');
   t('Section description');
   t('Section options');
   t('Section title');

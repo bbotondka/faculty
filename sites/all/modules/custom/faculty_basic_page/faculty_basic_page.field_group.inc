@@ -136,6 +136,7 @@ function faculty_basic_page_field_group_info() {
     'weight' => '5',
     'children' => array(
       0 => 'field_reference',
+      1 => 'field_link',
     ),
     'format_type' => 'tab',
     'format_settings' => array(

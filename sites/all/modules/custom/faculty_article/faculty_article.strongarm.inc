@@ -100,10 +100,6 @@ function faculty_article_strongarm() {
             'weight' => '4',
             'visible' => FALSE,
           ),
-          'embedded_display' => array(
-            'weight' => '0',
-            'visible' => TRUE,
-          ),
         ),
       ),
     ),
