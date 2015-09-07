@@ -24,7 +24,16 @@ function faculty_css_alter(&$css) {
       $count++;
     }
   }
+}
 
+/**
+ * Implements hook_js_alter().
+ */
+
+function faculty_js_alter(&$javascript) {
+  if (isset($javascript['sites/all/modules/contrib/tb_megamenu/js/tb-megamenu-frontend.js'])) {
+    $javascript['sites/all/modules/contrib/tb_megamenu/js/tb-megamenu-frontend.js']['data'] = drupal_get_path('theme', 'faculty') . '/src/scripts/js/megamenu.js';
+  }
 }
 
 /**

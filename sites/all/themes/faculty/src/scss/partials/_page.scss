@@ -103,56 +103,48 @@ header {
 
 /* NAV */
 .tb-megamenu {
-    .nav-collapse {
-        float: right;
-        text-align: right;
-        height: 58px;
-        li {
+  .nav-collapse {
+    float: right;
+    text-align: right;
+    height: 58px;
+    li {
+      a {
+        background: #25304f!important;
+        font-size: 11px;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: left;
+      }
+      .tb-megamenu-submenu {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+
+        .row-fluid {
+          .span6 {
+            width: 50%;
+            padding: 0;
+            margin: 0;
+          }
+          .mega-inner {
+            padding: 0;
+            .tb-megamenu-column {
+              padding-right: 0;
+            }
             a {
-                background: #25304f!important;
-                font-size: 11px;
-                text-decoration: none;
-                text-transform: uppercase;
-                text-align: left;
+              background: #25304f!important;
+              color: #fff!important;
+              text-align: left;
+              padding: 15px 20px!important;
+              @include bp(tablet) {
+                background: transparent!important;
+              }
             }
-            .tb-megamenu-submenu {
-                background: transparent;
-                border: 0;
-                box-shadow: none;
-                .row-fluid {
-                    .span6 {
-                        width: 50%;
-                        padding: 0;
-                        margin: 0;
-                    }
-                    .mega-inner {
-                        padding: 0;
-                        .tb-megamenu-item.level-2 .tb-megamenu-submenu {
-                            display: none;
-                            @include bp(tablet) {
-                                display: block;
-                            }
-                        }
-                        .tb-megamenu-item.level-2.open .tb-megamenu-submenu {
-                            display: block;
-                            .tb-megamenu-column {
-                                padding-right: 0;
-                            }
-                        }
-                        a {
-                            background: #25304f!important;
-                            color: #fff!important;
-                            text-align: left;
-                            padding: 15px 20px!important;
-                            @include bp(tablet) {
-                                background: transparent!important;
-                            }
-                        }                        
-                    }
-                }
-            }
+          }
         }
+      }
     }
+  }
 }
 
 .nav-container {
