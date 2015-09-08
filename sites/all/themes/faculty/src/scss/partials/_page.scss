@@ -43,6 +43,15 @@ h4 { }
     }
 }
 
+.only-mobile {
+    display: none;
+    @include bp(tablet) {
+        display: block;
+    }
+}
+
+
+
 /* HEADER */
 header {
     //height: 170px;
@@ -77,12 +86,12 @@ header {
     @include bp(tablet) {
         display: block;
         width: 100%;
+        height: 50px;
         .nav-trigger {
-            /*            height: 85px;*/
             background: transparent;
-            float: left;
+            display: inline-block;
             padding: 10px 13px;
-            width: 4em;
+            width: 15%;
             height: 50px;
             background-color: #25304f;
 
@@ -103,19 +112,20 @@ header {
         }
         #logo-mobile {
             display: inline-block;
-            max-width: 12em;
+            width: 70%;
             text-align: center;
+            vertical-align: top;
             line-height: 50px;
+
             img {
-                max-width: 90%;
-                margin: 0 0 0 5%;
+                width: 90%;
             }
         }
         .extra-trigger {
-            width: 60px;
+            width: 15%;
             height: 50px;
-            float: right;
             background: url('../images/icon-school.png') no-repeat center center #dc1b74;
+            display: inline-block;
             background-size: 2em;
         }
     }
@@ -127,6 +137,7 @@ header {
     float: right;
     text-align: right;
     height: 58px;
+    background: transparent;
 
     @include bp(tablet) {
       float: none!important;
@@ -140,6 +151,13 @@ header {
         text-decoration: none;
         text-transform: uppercase;
         text-align: left;
+
+        @include bp(tablet) {
+            background: transparent!important;
+            border: 0!important;
+            color: #25304f!important;
+            padding-left: 0!important;
+        }
       }
       .tb-megamenu-submenu {
         background: transparent;
@@ -164,6 +182,9 @@ header {
               padding: 15px 20px!important;
               @include bp(tablet) {
                 background: transparent!important;
+                border: 0!important;
+                color: #25304f!important;
+                padding: 9px 15px 9px 15px!important;
               }
             }
           }

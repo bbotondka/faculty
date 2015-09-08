@@ -1,16 +1,32 @@
 /* BLOCKS */
 
 .block { }
-.region-header {
+.side-menu {
     @include bp(tablet) {
         display: none;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .4);
+        position: fixed;
+        left: 0;
+        z-index: 20;
+        width: 100%;
     }
+    .side-menu-content {
+        @include bp(tablet) {
+          width: 85%;
+          background-color: #fff;
+          height: 100%;
+          padding: 2em 1em;
+        }
+    }
+
     .block-menu {
         float: left;
         margin: 5px 0 0;
         @include bp(tablet) {
-            float: none;
             @extend .clearfix;
+            float: none;
+            margin: 0;
         }
         .menu {
             padding: 0;

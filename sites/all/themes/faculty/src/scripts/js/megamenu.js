@@ -41,17 +41,22 @@ Drupal.TBMegaMenu = Drupal.TBMegaMenu || {};
 
       $('.nav-trigger').click(function (e) {
           e.preventDefault();
-          console.log('ouii')
-          $('.region-header').toggle();
+          $('.side-menu').toggle();
           $(this).toggleClass('active');
       })
 
       var isTouch = 'ontouchstart' in window && !(/hp-tablet/gi).test(navigator.appVersion);
       if(!isTouch){
+        var width = $('.tb-megamenu-nav').width();
+        var firstLeft = $('.tb-megamenu-item.level-1').eq(0).offset().left;
+
+        $(window).resize(function($){
+            width = $('.tb-megamenu-nav').width();
+            firstLeft = $('.tb-megamenu-item.level-1').eq(0).offset().left;
+        });
+
         $(document).ready(function($){
           var mm_duration = 0;
-          var width = $('.tb-megamenu-nav').width();
-          var firstLeft = jQuery('.tb-megamenu-item.level-1').eq(0).offset().left;
 
           $('.tb-megamenu').each (function(){
             if ($(this).data('duration')) {

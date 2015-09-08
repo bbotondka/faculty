@@ -7,9 +7,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </a>
-                <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo-mobile"><img src="<?php print base_path() . path_to_theme(); ?>/build/images/logo-mobile.png" /></a>
-                <a class="extra-trigger" href="#">
+                </a><!--
+                --><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo-mobile"><img src="<?php print base_path() . path_to_theme(); ?>/build/images/logo-mobile.png" /></a><!--
+                --><a class="extra-trigger" href="#">
 
                 </a>
             </div>
@@ -25,8 +25,10 @@
             </div>
 
 
-            <div class="no-lr-padding">
+            <div class="no-lr-padding side-menu">
+              <div class="side-menu-content">
                 <?php print render($page['header']); ?>
+              </div>
             </div>
             <!--div class="nav-container">
                 <?php if ($main_menu): ?>
