@@ -16,6 +16,8 @@ function faculty_menulink_default_fe_block_settings() {
     'cache' => -1,
     'custom' => 0,
     'delta' => 'main-menu',
+    'i18n_block_language' => array(),
+    'i18n_mode' => 0,
     'module' => 'tb_megamenu',
     'node_types' => array(),
     'pages' => '',
@@ -28,10 +30,10 @@ function faculty_menulink_default_fe_block_settings() {
         'weight' => 0,
       ),
       'faculty' => array(
-        'region' => 'content',
+        'region' => 'header',
         'status' => 1,
         'theme' => 'faculty',
-        'weight' => -24,
+        'weight' => -21,
       ),
       'seven' => array(
         'region' => '',
