@@ -21,6 +21,7 @@
 		// We hide the comments and links now so that we can render them later.
 		hide($content['comments']);
 		hide($content['links']);
+		hide($content['field_section']);
 		print render($content);
 		?>
 	</div>
@@ -31,12 +32,6 @@
 
 </article>
 
-
-<?php
-  //dpm($node, '$node');
-  //dpm($content, '$content');
-?>
-
 <div id="sections-builder">
-  Section builder here
+  <?php print render($content['field_section']); ?>
 </div>

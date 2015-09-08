@@ -35,11 +35,28 @@ function _faculty_basic_page_rows_from_field_section(&$vars, $field_array) {
 
     // Numeric key - we use $field as field_name.
     if (is_numeric($field_key)) {
+      // Skip empty field.
+      if (empty($section_wrapper->$field)) {
+        continue;
+      }
+
       // We save field value.
       $field_value = $section_wrapper->$field->value();
 
-      // Set simple field value.
-      $row[$field] = $field_value;
+      switch ($field) {
+        case 'field_section_option':
+          // For each option.
+          foreach ($field_value as $option) {
+            $row[$field][$option] = TRUE;
+          }
+
+          break;
+
+        default:
+          // Set simple field value.
+          $row[$field] = $field_value;
+
+      }
 
     }
     else {
@@ -56,7 +73,14 @@ function _faculty_basic_page_rows_from_field_section(&$vars, $field_array) {
 
             // For each sub fields (typically blocs).
             $subrow = array();
+
+            // For each sub field.
             foreach ($field as $subfield) {
+              // Skip empty subfield.
+              if (empty($bloc_wrapper->$subfield)) {
+                continue;
+              }
+
               $subrow[$subfield] = $bloc_wrapper->$subfield->value();
             }
 

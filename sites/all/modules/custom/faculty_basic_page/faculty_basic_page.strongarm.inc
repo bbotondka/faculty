@@ -86,6 +86,9 @@ function faculty_basic_page_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'embedded_display' => array(
+        'custom_settings' => TRUE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
