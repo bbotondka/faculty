@@ -8,4 +8,75 @@ include_once 'faculty_basic_page.features.inc';
 // Fix bug with overriden status of views.
 include_once 'faculty_basic_page.views_export.inc';
 
+/**
+ * Creates a simple text rows array from a field collections, to be used in a
+ * field_preprocess function.
+ *
+ * @param $vars
+ *   An array of variables to pass to the theme template.
+ *
+ * @param $field_name
+ *   The name of the field being altered.
+ *
+ * @param $field_array
+ *   Array of fields to be turned into rows in the field collection.
+ */
 
+function _faculty_basic_page_rows_from_field_section(&$vars, $field_array) {
+  $vars['rows'] = array();
+
+  $entity_id = $vars['elements']['#entity']->item_id;
+  $entity = field_collection_item_load($entity_id);
+  $section_wrapper = entity_metadata_wrapper('field_collection_item', $entity);
+  $row = array();
+
+  // For each field to render.
+  foreach($field_array as $field_key => $field) {
+
+    // Numeric key - we use $field as field_name.
+    if (is_numeric($field_key)) {
+      // We save field value.
+      $field_value = $section_wrapper->$field->value();
+
+      // Set simple field value.
+      $row[$field] = $field_value;
+
+    }
+    else {
+      // String in key (probably field collection in field collection)
+      // We save field_key as field_name.
+      $field_value = $section_wrapper->$field_key->value();
+
+      switch ($field_key) {
+        case 'field_bloc':
+
+          // For each bloc to wrap.
+          foreach ($field_value as $field_collection_item_entity) {
+            $bloc_wrapper = entity_metadata_wrapper('field_collection_item', $field_collection_item_entity);
+
+            // For each sub fields (typically blocs).
+            $subrow = array();
+            foreach ($field as $subfield) {
+              $subrow[$subfield] = $bloc_wrapper->$subfield->value();
+            }
+
+            // We set subfield.
+            $row[$field_key][] = $subrow;
+
+          }
+
+          break;
+
+        default:
+          // Set simple field value.
+          $row[$field_key] = $field_value;
+
+      }
+
+    }
+
+  }
+
+  $vars['rows'][] = $row;
+
+}

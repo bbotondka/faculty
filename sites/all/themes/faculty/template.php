@@ -159,3 +159,43 @@ function _faculty_sanitize_image_url_when_rendering($variables) {
 	// Return $sanitized_output or input.
 	return $is_image_url_formatter ? $sanitized_output : $output;
 }
+
+/**
+ * Implements template_preprocess_entity().
+ *
+ * Here we add faculty_preprocess_field_collection_item().
+ */
+function faculty_preprocess_entity(&$variables, $hook) {
+  $function = 'faculty_preprocess_' . $variables['entity_type'];
+  if (function_exists($function)) {
+    $function($variables, $hook);
+  }
+}
+
+/**
+ * Field Collection-specific implementation of template_preprocess_entity().
+ */
+function faculty_preprocess_field_collection_item(&$vars) {
+
+  switch($vars['elements']['#entity']->field_name) {
+    case 'field_section':
+      // We use custom tpl to render this collection.
+      $vars['theme_hook_suggestions'][] = 'field__collection_sections';
+
+      // @Todo: Add field to extract here.
+      $field_array = array(
+        'field_section_title',
+        'field_section_desc',
+        'field_section_option',
+        'field_bloc' => array(
+          'field_size',
+          'field_content'
+        )
+      );
+
+      _faculty_basic_page_rows_from_field_section($vars, $field_array);
+
+      break;
+  }
+
+}
